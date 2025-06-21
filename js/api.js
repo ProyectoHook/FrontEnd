@@ -1,8 +1,9 @@
-import { USER_SERVICE_URL} from '../data/config.js'
+import { USER_SERVICE_URL } from '../data/config.js'
+import { SESSION_SERVICE_URL } from '../data/config.js';
 
 export async function loginUser(email, password) {
   try {
-    const url = USER_SERVICE_URL+'api/Auth/login';
+    const url = USER_SERVICE_URL + 'api/Auth/login';
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -23,6 +24,35 @@ export async function loginUser(email, password) {
     throw error;
   }
 }
+
+export async function getSessionByAccessCode(accessCode, token) {
+  try {
+
+    const url = `${SESSION_SERVICE_URL}session/${accessCode}`;
+  
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error del servidor: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('Sesión encontrada:', data);
+    return data;
+
+  } catch (error) {
+    console.error('Error al obtener sesión por accessCode:', error);
+    throw error;
+  }
+}
+
+
 
 
 

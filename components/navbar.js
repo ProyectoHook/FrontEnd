@@ -15,6 +15,9 @@ export default () => {
       <li class="nav-item">
         <a class="nav-link" href="#/">Home</a>
       </li>
+        <li class="nav-item">
+        <a class="nav-link" href="#/sessions">Unirse a una sesión</a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="#/about">Sobre Nosotros</a>
       </li>

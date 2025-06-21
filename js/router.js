@@ -2,12 +2,14 @@ import Home from './views/home.js';
 import Login from './views/login.js';
 import OtraVista from './views/otraVista.js';
 import Presentations from './views/presentations.js'
+import Sessions from './views/sessions.js'
 
 //aca defino las rutas de mi app
 const routes = {
   '/': Home,
   '/login' : Login,
   '/presentations' : Presentations,
+  '/sessions' : Sessions,
   '/other': OtraVista
 };
 

@@ -1,5 +1,5 @@
 import router from './router.js';
-import { loginUser } from './api.js'
+import { getSessionByAccessCode, loginUser } from './api.js'
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,9 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("click");
 
         //click en elemento exacto
-        if (event.target.matches("#btn-login")) {
-            // hacer login
-            console.log('Logeando user...');
+        if (event.target.matches("#join-session-btn")) {
+
         }
 
 
@@ -70,12 +69,12 @@ document.addEventListener('submit', async (event) => {
             const token_type = response.token_type;
             const user_id = response.user_id;
 
-            sessionStorage.setItem('access_token',access_token);
-            sessionStorage.setItem('expires_in',expires_in);
-            sessionStorage.setItem('refresh_token',refresh_token);
-            sessionStorage.setItem('role',role);
-            sessionStorage.setItem('token_type',token_type);
-            sessionStorage.setItem('user_id',user_id);
+            sessionStorage.setItem('access_token', access_token);
+            sessionStorage.setItem('expires_in', expires_in);
+            sessionStorage.setItem('refresh_token', refresh_token);
+            sessionStorage.setItem('role', role);
+            sessionStorage.setItem('token_type', token_type);
+            sessionStorage.setItem('user_id', user_id);
 
             // Redirección a /SesionIniciada
             location.hash = '#/presentations';
@@ -85,6 +84,25 @@ document.addEventListener('submit', async (event) => {
 
 
         console.log('Login con:', email, password);
+
+    }
+});
+
+document.addEventListener('click', async (event) => {
+    if (event.target.matches('#join-session-btn')) {
+        const codigo = document.getElementById('join-session-access-code').value.trim();
+        const token = sessionStorage.getItem('access_token');
+        if (codigo.length < 6) {
+            alert('Por favor ingresá un código valido');
+            return;
+        }
+        console.log('Uniendose a la session: ', codigo);
+        try {
+            await getSessionByAccessCode(codigo,token);
+            alert('Nice');
+        } catch (error) {
+            alert(error);
+        }
 
     }
 });
