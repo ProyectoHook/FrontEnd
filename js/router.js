@@ -1,9 +1,13 @@
 import Home from './views/home.js';
+import Login from './views/login.js';
 import OtraVista from './views/otraVista.js';
+import Presentations from './views/presentations.js'
 
 //aca defino las rutas de mi app
 const routes = {
   '/': Home,
+  '/login' : Login,
+  '/presentations' : Presentations,
   '/other': OtraVista
 };
 
@@ -25,7 +29,7 @@ const router = async () => {
     //}
     //else
     //{
-      render = routes[path] || Home;
+      render = routes[path] || Login;
       document.getElementById('app').innerHTML = await render();
     //}
 

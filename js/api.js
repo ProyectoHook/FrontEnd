@@ -1,35 +1,29 @@
-import { PRESENTATION_SERVICE_URL} from '../data/config.js'
+import { USER_SERVICE_URL} from '../data/config.js'
 
-export const getPresentations = async (id) => {
-  const response = await fetch(`${PRESENTATION_SERVICE_URL}presentation/${id}`, {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' }
-  });
-  return await response.json();
-};
+export async function loginUser(email, password) {
+  try {
+    const url = USER_SERVICE_URL+'api/Auth/login';
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
 
-export const post = async (algo,otroAlgoPalBody) => {
+    if (!response.ok) {
+      throw new Error(`Error en la respuesta: ${response.status}`);
+    }
 
-  const body = {
-    "key_one":algo,
-    "key_two":otroAlgoPalBody,
+    const data = await response.json();
+    console.log('Respuesta del login:', data);
+    return data;
+  } catch (error) {
+    console.error('Error en la llamada login:', error);
+    throw error;
   }
+}
 
-  const response = await fetch(`${SESSION_SERVICE_URL}/Session`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-
- const data = await response.json();    // --> con este json creo un objeto asi manejo las respuestas
-
-  return {
-        ok: response.ok,          // true si 2xx
-        status: response.status,  // código numérico (200, 400, etc.)
-        data: data                // el JSON del cuerpo
-    };
-
-};
 
 
 
