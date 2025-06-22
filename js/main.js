@@ -1,5 +1,5 @@
 import router from './router.js';
-import { getSessionByAccessCode, loginUser } from './api.js'
+import { createParticipant, getSessionByAccessCode, loginUser } from './api.js'
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -88,6 +88,8 @@ document.addEventListener('submit', async (event) => {
     }
 });
 
+
+// UNIRSE A UNA SESIÓN
 document.addEventListener('click', async (event) => {
     if (event.target.matches('#join-session-btn')) {
         const codigo = document.getElementById('join-session-access-code').value.trim();
@@ -99,10 +101,18 @@ document.addEventListener('click', async (event) => {
         console.log('Uniendose a la session: ', codigo);
         try {
             const session = await getSessionByAccessCode(codigo,token);
+            console.log('session found',session);
 
-            //TE UNO AL HUB --> SESSIONID
+            //REGISTRO COMO PARTICIPANTE
+            const sessionId = session.idSession;
+            const userId = sessionStorage.getItem('user_id');
 
-            alert('Nice');
+            console.log(sessionId);
+            console.log(userId);
+
+            await createParticipant(userId,sessionId,token);
+            
+            alert('Usuario agregado correctamente');            
         } catch (error) {
             alert(error);
         }

@@ -1,18 +1,25 @@
 import Landing from './views/landing.js';
-import Login from './views/login.js';
+import Login from './views/user/login.js';
+import Register from './views/user/register.js';
 import Presentations from './views/presentations.js'
 import JoinSession from './views/joinSessions.js'
 import Participant from './views/active/participant.js'
 import Presenter from './views//active/presenter.js'
+import Account from './views/account.js';
+import About from './views/about.js';
+
 
 //aca defino las rutas de mi app
 const routes = {
   '/': Landing,
   '/login': Login,
+  '/register' : Register,
+  '/about' : About,
   '/presentations': Presentations,
-  '/joinSession': JoinSession,
+  '/joinsession': JoinSession,
   '/active/participant': Participant,
-  '/active/presenter': Presenter
+  '/active/presenter': Presenter,
+  '/account' : Account
 };
 
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';

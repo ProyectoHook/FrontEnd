@@ -11,26 +11,27 @@ export default () => {
   
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
+
           <li class="nav-item">
-            <a class="nav-link" href="#/">Home</a>
+            <a class="nav-link" href="#/joinsession">Unirse a una sesión</a>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" href="#/sessions">Unirse a una sesión</a>
+            <a class="nav-link" href="#/joinsession">Mis sesiones activas</a>
           </li>
+
            <li class="nav-item">
-            <a class="nav-link" href="#/sessions">Crear una presentación</a>
+            <a class="nav-link" href="#/presentations">Crear una presentación</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#/about">Sobre Nosotros</a>
-          </li>
+   
         </ul>
   
         <ul class="navbar-nav ms-auto">
           <li class="nav-item auth">
-            <a class="nav-link" href="#/login">Mi cuenta</a>
+            <a class="nav-link" href="#/account">Mi cuenta</a>
           </li>
           <li class="nav-item auth">
-            <a class="nav-link" href="#/register">Logout</a>
+            <a class="nav-link" href="#/landing">Logout</a>
           </li>
         </ul>
       </div>

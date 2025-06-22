@@ -29,7 +29,7 @@ export async function getSessionByAccessCode(accessCode, token) {
   try {
 
     const url = `${SESSION_SERVICE_URL}session/${accessCode}`;
-  
+
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -38,13 +38,15 @@ export async function getSessionByAccessCode(accessCode, token) {
       }
     });
 
-    if (!response.ok) {
-      throw new Error(`Error del servidor: ${response.status}`);
+    const data = await response.json();
+
+    if (response.ok) {
+      return data;
     }
 
-    const data = await response.json();
-    console.log('Sesión encontrada:', data);
-    return data;
+    const error = new Error(data.message || 'Error');
+    error.status = response.status;
+    throw error;
 
   } catch (error) {
     console.error('Error al obtener sesión por accessCode:', error);
@@ -53,7 +55,44 @@ export async function getSessionByAccessCode(accessCode, token) {
 }
 
 
+export async function createParticipant(user, session, token) {
 
+
+  const url = `${SESSION_SERVICE_URL}participant/create`;
+
+  const body = {
+    'idUser': user,
+    'idSession': session
+  }
+
+  console.log(body);
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(body)
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log('user added as participant', data);
+      return data;
+    }
+
+    const error = new Error(data.message || 'Error');
+    error.status = response.status;
+    throw error;
+
+  } catch (error) {
+    console.error('Error al agregar el usuario como participante', error);
+    throw error;
+  }
+}
 
 
 
