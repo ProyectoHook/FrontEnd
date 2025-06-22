@@ -1,4 +1,4 @@
-import Navbar from '../../components/navbar.js';
+import Navbar from '../../components/navbar_auth.js';
 
 export default () => {
     const access_token = sessionStorage.getItem('access_token');

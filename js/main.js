@@ -98,7 +98,10 @@ document.addEventListener('click', async (event) => {
         }
         console.log('Uniendose a la session: ', codigo);
         try {
-            await getSessionByAccessCode(codigo,token);
+            const session = await getSessionByAccessCode(codigo,token);
+
+            //TE UNO AL HUB --> SESSIONID
+
             alert('Nice');
         } catch (error) {
             alert(error);
@@ -106,3 +109,5 @@ document.addEventListener('click', async (event) => {
 
     }
 });
+
+// COMUNICACIÓN CON HUB
