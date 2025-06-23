@@ -1,4 +1,4 @@
-import Navbar from '../../../components/navbar.js';
+import Navbar from "../../../components/navbar.js";
 export default () => {
   return `
     ${Navbar()}
@@ -8,7 +8,7 @@ export default () => {
           <h2 class="my-4 text-center">Registrarme</h2>
           <div class="card-body">
             
-            <form id="login-form" novalidate>
+            <form id="register-form" novalidate>
               <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input 
@@ -16,7 +16,10 @@ export default () => {
                   class="form-control" 
                   id="nombre" 
                   name="nombre" 
+                  minlength="4"
+                  pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ ]+$"
                   placeholder="su nombre" 
+                  autocomplete="username"
                   required
                 >
                 <div class="invalid-feedback">
@@ -32,6 +35,7 @@ export default () => {
                   id="email" 
                   name="email" 
                   placeholder="ejemplo@correo.com" 
+                  autocomplete="email"
                   required
                 >
                 <div class="invalid-feedback">
@@ -46,7 +50,9 @@ export default () => {
                   class="form-control" 
                   id="password" 
                   name="password" 
-                  placeholder="Contraseña" 
+                  minlength="8"
+                  placeholder="Contraseña"
+                  autocomplete="current-password" 
                   required
                 >
                 <p class="card-text mt-3"><a href="#">Olvidaste la contraseña?</a><p>
@@ -59,6 +65,14 @@ export default () => {
             </form>
           </div>
         </div>
+        <dialog class ="registerCompleted" id ="registerCompleted">
+          <div class ="registerDiv">
+            <span class="dialogText">¡Registro completado!</span>
+            <button class="acceptBtn" id="acceptBtn">
+            <span>Aceptar</span>
+            </button>
+          </div>
+        </dialog>
     </div>
     `;
 };

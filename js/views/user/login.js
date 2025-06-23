@@ -1,4 +1,4 @@
-import Navbar from '../../../components/navbar.js'
+import Navbar from "../../../components/navbar.js";
 export default () => {
   return `
     ${Navbar()}
@@ -17,6 +17,7 @@ export default () => {
                   id="email" 
                   name="email" 
                   placeholder="ejemplo@correo.com" 
+                  autocomplete="email"
                   required
                 >
                 <div class="invalid-feedback">
@@ -32,6 +33,7 @@ export default () => {
                   id="password" 
                   name="password" 
                   placeholder="Contraseña" 
+                  autocomplete="current-password" 
                   required
                 >
                 <p class="card-text mt-3"><a href="#">Olvidaste la contraseña?</a><p>
