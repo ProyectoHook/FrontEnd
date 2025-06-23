@@ -1,5 +1,5 @@
 import router from './router.js';
-import { createParticipant, getSessionByAccessCode, loginUser } from './api.js'
+import { createParticipant, getSessionByAccessCode, loginUser, getPresentation } from './api.js'
 import { startSignalRConnection, joinSessionGroup } from './SignalR/Manager.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -107,10 +107,18 @@ document.addEventListener('click', async (event) => {
             const sessionId = session.idSession;
             const userId = sessionStorage.getItem('user_id');
 
-            console.log('Asignando participante: ' + userId + 'a la session: ' + sessionId);
-            await createParticipant(userId, sessionId, token);
+            const participantResponse = await createParticipant(userId, sessionId, token);
+            const presentationId = participantResponse.presentationId;
 
+            console.log('Asignando participante: ' + userId + 'a la session: ' + sessionId + ' con id presentación: '+presentationId);
+
+            sessionStorage.setItem('presentation_id', presentationId);
             sessionStorage.setItem('session_id', sessionId);
+
+            const presentation = await getPresentation(presentationId,token);
+            sessionStorage.setItem("presentation", JSON.stringify(presentation));
+
+
             window.open('#/active/participant', '_blank');
 
         } catch (error) {

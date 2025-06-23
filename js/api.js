@@ -1,5 +1,6 @@
-import { USER_SERVICE_URL } from '../data/config.js'
+import { USER_SERVICE_URL } from '../data/config.js';
 import { SESSION_SERVICE_URL } from '../data/config.js';
+import {PRESENTATION_SERVICE_URL} from '../data/config.js';
 
 export async function loginUser(email, password) {
   try {
@@ -96,3 +97,33 @@ export async function createParticipant(user, session, token) {
 
 
 
+
+export async function getPresentation(presentationId, token) {
+  try {
+
+    const url = `${PRESENTATION_SERVICE_URL}Presentation/GetById/${presentationId}`;
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log('Presentación encontrada: ',data);
+      return data;
+    }
+
+    const error = new Error(data.message || 'Error');
+    error.status = response.status;
+    throw error;
+
+  } catch (error) {
+    console.error('Error al obtener sesión por accessCode:', error);
+    throw error;
+  }
+}
