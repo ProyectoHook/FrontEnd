@@ -13,6 +13,10 @@ export default () => {
         <ul class="navbar-nav">
 
           <li class="nav-item">
+            <a class="nav-link" href="#/joinsession">Home</a>
+          </li>
+
+          <li class="nav-item">
             <a class="nav-link" href="#/joinsession">Unirse a una sesión</a>
           </li>
 
@@ -22,6 +26,10 @@ export default () => {
 
            <li class="nav-item">
             <a class="nav-link" href="#/presentations">Crear una presentación</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#/presentations">Mis presentaciones</a>
           </li>
    
         </ul>

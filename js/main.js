@@ -1,6 +1,6 @@
 import router from './router.js';
 import { createParticipant, getSessionByAccessCode, loginUser } from './api.js'
-
+import { startSignalRConnection, joinSessionGroup } from './SignalR/Manager.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -100,19 +100,19 @@ document.addEventListener('click', async (event) => {
         }
         console.log('Uniendose a la session: ', codigo);
         try {
-            const session = await getSessionByAccessCode(codigo,token);
-            console.log('session found',session);
+            const session = await getSessionByAccessCode(codigo, token);
+            console.log('session found', session);
 
             //REGISTRO COMO PARTICIPANTE
             const sessionId = session.idSession;
             const userId = sessionStorage.getItem('user_id');
 
-            console.log(sessionId);
-            console.log(userId);
+            console.log('Asignando participante: ' + userId + 'a la session: ' + sessionId);
+            await createParticipant(userId, sessionId, token);
 
-            await createParticipant(userId,sessionId,token);
-            
-            alert('Usuario agregado correctamente');            
+            sessionStorage.setItem('session_id', sessionId);
+            window.open('#/active/participant', '_blank');
+
         } catch (error) {
             alert(error);
         }
