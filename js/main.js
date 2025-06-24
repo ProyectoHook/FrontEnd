@@ -60,7 +60,6 @@ document.addEventListener('submit', async (event) => {
 
         try {
             const response = await loginUser(email, password);
-            
             alert('Usuario correctamente logueado');
 
             const access_token = response.access_token;
