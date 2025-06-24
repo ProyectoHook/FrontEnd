@@ -1,4 +1,4 @@
-import Navbar from '../../components/navbar_auth.js';
+import Navbar from '../../../components/navbar_auth.js';
 
 export default () => {
     return `

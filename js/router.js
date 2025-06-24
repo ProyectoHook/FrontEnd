@@ -2,7 +2,7 @@ import Landing from './views/landing.js';
 import Login from './views/user/login.js';
 import Register from './views/user/register.js';
 import Presentations from './views/presentations.js'
-import JoinSession from './views/joinSessions.js'
+import JoinSession from './views/sessions/joinSessions.js'
 import Participant from './views/active/participant.js'
 import Presenter from './views//active/presenter.js'
 import Account from './views/account.js';
