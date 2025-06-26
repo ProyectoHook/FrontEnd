@@ -7,6 +7,8 @@ import Participant from './views/active/participant.js';
 import Presenter from './views/active/presenter.js';
 import Account from './views/account.js';
 import About from './views/about.js';
+import CreatePresentation from './views/presentations/createPresentation.js';
+import CreateSlides from './views/presentations/createSlides.js';
 
 //aca defino las rutas de mi app
 const routes = {
@@ -15,6 +17,8 @@ const routes = {
   '/register' : Register,
   '/about' : About,
   '/presentations': Presentations,
+  '/presentations/create': CreatePresentation,
+  '/presentations/add-slide': CreateSlides,
   '/joinsession': JoinSession,
   '/active/participant': Participant,
   '/active/presenter': Presenter,
