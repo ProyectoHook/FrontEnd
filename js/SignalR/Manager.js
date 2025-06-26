@@ -1,3 +1,5 @@
+import { SIGNALR_HUB } from "../../data/config.js";
+
 let connection = null;
 let slideActualIndex = null;
 
@@ -7,7 +9,8 @@ export async function startSignalRConnection() {
     if (connection && connection.state === "Connected") return connection;
 
     connection = new signalR.HubConnectionBuilder()
-        .withUrl("https://localhost:6662/sessionhub")
+        //.withUrl("https://localhost:6662/sessionhub")
+        .withUrl(SIGNALR_HUB)
         .withAutomaticReconnect()
         .build();
 

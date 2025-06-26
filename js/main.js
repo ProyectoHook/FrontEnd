@@ -1,6 +1,8 @@
 import router from './router.js';
 import { createParticipant, getSessionByAccessCode, loginUser, getPresentation } from './api.js'
 import { startSignalRConnection, joinSessionGroup } from './SignalR/Manager.js';
+import { startSessionHandler, iniciarSignalR } from './Services/SignalR/signalR.js';
+import { joinSessionHandler } from './Services/SessionServices/joinSession.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -25,19 +27,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
         console.log("click");
 
-        //click en elemento exacto
-        if (event.target.matches("#join-session-btn")) {
+        //click en elemento exacto  -->  if (event.target.matches("#join-session-btn")) { ...  }
+        //click en algun hijo dentro de ese elemento --> if (event.target.closest('idDelElemento')) { ... }
+
+        //Presenter
+        if (event.target.matches("#create-session-btn")) {
+
+            alert("este seria para crear la sesion el codigo y que se conecte en otro momento...");
+
+            var sessioncode = "ABC123"
+
+            location.hash = `#/active/presenter/${sessioncode}`;
 
         }
 
+        //Presenter (start_btn)
+        if (event.target.matches("#start-session-btn")) {
 
+            //se crea la sesión
+            await startSessionHandler();
 
-        //click en algun hijo dentro de ese elemento
-        if (event.target.closest('idDelElemento')) {
+            console.log("renderizando vista de presentacion (presentador)");
+    
+            const accessCode = sessionStorage.getItem("accessCode");
 
-            console.log("hace algo");
+            //dispara el evento
+            location.hash = `#/active/presenter/${accessCode}`;          
+
+            //aqui dentro se hace el invoke para cargar el primer slide (signalR.js - linea 110)
+            await iniciarSignalR();
+
         }
 
+        //Participant
+        if (event.target.matches('#join-session-button')) {     
+
+            console.log("renderizando vista de presentacion (participante)");
+    
+            const accessCode = document.getElementById("sessionCodeInput").value;
+            sessionStorage.setItem("accessCode",accessCode);
+
+            //dispara el evento
+            location.hash = `#/active/participant/${accessCode}`;  
+            
+            await joinSessionHandler();
+
+        }
+
+        //sendAnswer
+        if (event.target.matches('#sendAnswer-btn')) {
+        
+            alert("Enviando respuesta .... falta el endpoint supongo... algo como POST answer(session,user,slideId,answerPicked. El endpoint tb valida si ya mando respuesta ese usuario para esa sesión. Ver como hacer para que si no contesto nada, y el profe pasa la diapo que no pueda volver (puede verificar el currentSlide, si no estas en esa diapo => ya paso la diapo => no te deja. tb podes guardar algo como una lista de (currentSlide,enableBtn) que los deshabilite si se adelantan o retroceden las diapos ");
+            
+            document.getElementById(listItem1).value
+            
+
+
+            const answerBtn = document.getElementById("sendAnswer-btn");
+            answerBtn.classList.add('disabled');
+
+        }   
 
 
     });
@@ -90,6 +139,7 @@ document.addEventListener('submit', async (event) => {
 
 
 // UNIRSE A UNA SESIÓN
+/*
 document.addEventListener('click', async (event) => {
     if (event.target.matches('#join-session-btn')) {
         const codigo = document.getElementById('join-session-access-code').value.trim();
@@ -129,3 +179,4 @@ document.addEventListener('click', async (event) => {
 });
 
 // COMUNICACIÓN CON HUB
+*/

@@ -19,7 +19,6 @@ export default async () => {
 
     //Tomar los datos de la presentación
     const presentation = JSON.parse(sessionStorage.getItem("presentation"));
-    
 
 
     // Función para formatear fechas (opcional)
