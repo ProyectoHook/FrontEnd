@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         //Participant
-        if (event.target.matches('#join-session-button')) {     
+        if (event.target.matches('#join-session-button')) { 
 
             console.log("renderizando vista de presentacion (participante)");
     

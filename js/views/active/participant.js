@@ -2,6 +2,7 @@ import { startSignalRConnection, joinSessionGroup, getSlideActualIndex, onSlideC
 import Navbar from '../../../components/navbar_auth.js';
 
 export default async () => {
+    
     const sessionId = sessionStorage.getItem('session_id');
     if (!sessionId) {
         window.location.href = '#/error';

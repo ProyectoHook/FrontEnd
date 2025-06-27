@@ -1,4 +1,4 @@
-import Navbar from '../../../components/navbar_auth.js';
+import { showSlideWaiting } from '../../../components/slideCards.js';
 
 export default async (sessionCode) => {
 
@@ -11,9 +11,10 @@ export default async (sessionCode) => {
         <span id="sessionCodeSpan" class="text-danger fw-bold ms-2">-</span>
     </div>
 
-    <div class="container bg-light p-0 border border-dark rounded" style="width: 640px; height: 480px; overflow: hidden;">
-        <img id="imgSlideScreen" src="https://i.pinimg.com/736x/53/0d/a3/530da3e6a7400ad49b5a076feb538b6b.jpg"
-             class="img-fluid" alt="Imagen" style="object-fit: cover; width: 100%; height: 100%;">
+    <div class="container bg-light p-0 border border-dark rounded" style="width: 60%; height:80vh; overflow: hidden;">
+        <div id="slideCardContainer">
+            ${showSlideWaiting()}
+        </div>
     </div>
     
     <h2 class="text-center">Session code: ${sessionCode}</h2>`;

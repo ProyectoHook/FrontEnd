@@ -1,53 +1,61 @@
-//import { SIGNALR_HUB } from '../../../data/config.js'
-//import showSlide from '../../../components/slideCards.js'
 
+import { SESSION_SERVICE_URL, SIGNALR_HUB } from '../../../data/config.js'
+import { showSlide } from '../../../components/slideCards.js'
 
 
 export async function joinSession(sessionCode) {
 
-            const url = SESSION_SERVICE_URL + '/join/private/' + sessionCode;
+        console.log("iniciando joinSesison...")
 
-            const jwt = 'Bearer ' + localStorage.getItem("access_token");
-            console.log(jwt);
+        const url = SESSION_SERVICE_URL + 'session/join/private/' + sessionCode;
 
-            try {
-                const response = await fetch(url, {
+        const jwt = 'Bearer ' + sessionStorage.getItem("access_token");
+        console.log("jwt para iniciar conexion como participante")
+        console.log(jwt);
+
+        try
+        {
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Authorization': jwt,
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify()
+                    }
                 });
-
-                if (!response.ok) {
-                    // Puedes lanzar error con más detalle si la API devuelve mensajes
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Error en la solicitud');
-                }
-
-                const data = await response.json();
-                //console.log('Respuesta del servidor:', data);
-
-                return data;
-
-            } catch (error) {
-                console.error('Error al iniciar sesión:', error.message);
+                
+            if (!response.ok) {
+                // Puedes lanzar error con más detalle si la API devuelve mensajes
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Error en la solicitud');
             }
+
+            const data = await response.json();
+                
+            return data;
+
         }
+        catch (error)
+        {
+            console.error('Error al iniciar sesión:', error.message);
+        }
+    }
 
 export async function joinSessionHandler() {
 
-            console.log("Iniciando inicio de sesion (joinSessionHandler)...");
+            console.log("Iniciando joinSessionHandler...");
 
             const sessionCode = document.getElementById('sessionCodeInput').value;
 
             const json = await joinSession(sessionCode);
 
+
             // --- REVISAR ---
 
             console.log("datos de respuesta de la conexion");
             console.log(json);
+
+            console.log("almacenando sessionId")
+            sessionStorage.setItem("sessionId",JSON.stringify(json.sessionId));
 
             var sortedSlides = json.presentation.slides;
             //orden por posicion ascendente
@@ -63,49 +71,70 @@ export async function joinSessionHandler() {
             //const screen = document.getElementById('imgSlideScreen');
             //screen.src = sortedSlides[json.currentSlide-1].content;
 
-            //muestro una card dependiendo el tipo de diapositiva
-            console.log("cargando primera diapo")
-            const slideContainer = document.getElementById('slideCardContainer');
-            consolelog(slideCardContainer);
-            slideContainer.innerHTML = showSlide(sortedSlides[json.currentSlide-1]);
-
+            if(json.currentSlide != 0)
+            {
+                console.log("cargando diapo actual: ", json.currentSlide)
+                const slideContainer = document.getElementById('slideCardContainer');
+                console.log(slideCardContainer);
+                console.log(sortedSlides[json.currentSlide-1]);
+                slideContainer.innerHTML = showSlide(sortedSlides[json.currentSlide-1]);
+            }
+            else
+            {
+                console.log("currentSlide por ahora es 0 (aguardando....)");
+            }
+           
             // ---------------
 
-            let sessionStatus = document.getElementById('sessionStatusSpan');
-
+            var sessionStatus = document.getElementById('sessionStatusSpan');
+            var sessionCodeSpan = document.getElementById('sessionCodeSpan');
+            
             sessionStatus.textContent = "Joined in";
             sessionStatus.classList.remove("text-danger");
             sessionStatus.classList.add("text-success");
 
+            sessionCodeSpan.innerHTML = sessionCode;
+
             console.log("Inicio de sesion exitoso.");
 
+
+            console.log("iniciando conexion SignalR");
+
+            console.log("inicio variable conexion");
             const connection = new signalR.HubConnectionBuilder()
                 .withUrl(SIGNALR_HUB)
                 .configureLogging(signalR.LogLevel.Information)
                 .build();
 
 
+            console.log("defino evento receiveSlide");
             //defino lo que sucede cuando reciba mensaje
             connection.on("ReceiveSlide", (slideIndex) => {
                 console.log("MENSAJE RECIBIDO - PARTICIPANTE");
                 let sortedSlides = JSON.parse(localStorage.getItem("slides"));                
                 const slideContainer = document.getElementById('slideCardContainer');
+
+                console.log("slide antes de ser enviado a showslide")
+                console.log(sortedSlides[slideIndex-1]);
+
                 slideContainer.innerHTML = showSlide(sortedSlides[slideIndex-1],"participante");
             });
-
+ 
 
             //inicio la conexion
-            connection.start()
-                .then(function () {
-                console.log("Conexión iniciada");
-        // Aquí puedes enviar mensajes con connection.invoke(...) si quieres
-                }).catch(function (err) {
-                    return console.error(err.toString());
-                    });
+            await connection.start()
+
+
+            //agrego al grupo correspondiente
+            await connection.invoke("JoinSession", JSON.parse(sessionStorage.getItem("sessionId")));
+
+            
         }
 
-   
 
+
+
+   
         //creo variable para conectarme
            
 

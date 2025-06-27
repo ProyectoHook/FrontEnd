@@ -11,6 +11,7 @@ export function showSlideWaiting(){
 export function showSlide(slide,role) {
 
     console.log("renderizando slide");
+    console.log("esta llegando undefined");
     console.log(slide)
 
 

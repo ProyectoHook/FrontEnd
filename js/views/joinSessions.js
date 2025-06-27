@@ -54,7 +54,7 @@ export default () => {
             <input id="sessionCodeInput" class="ms-5" style="width: 50%;" placeholder="Escriba el codigo de sesion..." />
           </div>
           <div class="m-3">
-            <button id="join-session-button" class="btn btn-primary"Join Session</button>
+            <button id="join-session-button" class="btn btn-primary">Join Session</button>
           </div>
         </div> 
         
@@ -65,7 +65,7 @@ export default () => {
           </div>
           <div class="col">
             <button id="join-session-btn" class="btn btn-primary w-100">
-              Unirse
+              Unirse (este boton nop)
             </button>
           </div>
         </div>
