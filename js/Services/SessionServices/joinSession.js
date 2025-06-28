@@ -89,25 +89,23 @@ export async function joinSessionHandler() {
             var sessionStatus = document.getElementById('sessionStatusSpan');
             var sessionCodeSpan = document.getElementById('sessionCodeSpan');
             
-            sessionStatus.textContent = "Joined in";
+            sessionStatus.textContent = "Conectado";
+            sessionCodeSpan.innerHTML = sessionCode;
             sessionStatus.classList.remove("text-danger");
             sessionStatus.classList.add("text-success");
+            sessionCodeSpan.classList.remove("text-danger");
+            sessionCodeSpan.classList.add("text-success");
 
-            sessionCodeSpan.innerHTML = sessionCode;
-
+            
             console.log("Inicio de sesion exitoso.");
-
-
             console.log("iniciando conexion SignalR");
 
-            console.log("inicio variable conexion");
             const connection = new signalR.HubConnectionBuilder()
                 .withUrl(SIGNALR_HUB)
                 .configureLogging(signalR.LogLevel.Information)
                 .build();
 
 
-            console.log("defino evento receiveSlide");
             //defino lo que sucede cuando reciba mensaje
             connection.on("ReceiveSlide", (slideIndex) => {
                 console.log("MENSAJE RECIBIDO - PARTICIPANTE");
@@ -128,7 +126,7 @@ export async function joinSessionHandler() {
             //agrego al grupo correspondiente
             await connection.invoke("JoinSession", JSON.parse(sessionStorage.getItem("sessionId")));
 
-            
+
         }
 
 
