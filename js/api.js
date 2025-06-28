@@ -96,8 +96,6 @@ export async function createParticipant(user, session, token) {
 }
 
 
-
-
 export async function getPresentation(presentationId, token) {
   try {
 
@@ -126,4 +124,51 @@ export async function getPresentation(presentationId, token) {
     console.error('Error al obtener sesión por accessCode:', error);
     throw error;
   }
+}
+
+
+export async function createPresentation(data, token) {
+  try {
+    const url = `${PRESENTATION_SERVICE_URL}Presentation`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        title: data.title,
+        activityStatus: true,
+        idUserCreat: data.idUserCreat
+      })
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      const error = new Error(result.message || 'Error al crear presentación');
+      error.status = response.status;
+      throw error;
+    }
+
+    return result;
+
+  } catch (error) {
+    console.error('Error al crear presentación:', error);
+    throw error;
+  }
+}
+
+
+export async function createSlide(data) {
+  const res = await fetch(`${API_URL}/Slide`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) throw new Error("Error al crear slide");
+
+  return await res.json();
 }

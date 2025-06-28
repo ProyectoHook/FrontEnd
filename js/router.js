@@ -8,17 +8,20 @@ import Participant from './views/active/viewer.js';
 import Presenter from './views/active/presenter.js';
 import Account from './views/account.js';
 import About from './views/about.js';
+
 import postRenderPresenter from '../src/postRenderHandlers/postRenderPresenter.js';
+import createPresentation from './views/createPresentation.js';
 
 //aca defino las rutas de mi app
 const routes = {
   '/': Landing,
   '/login': Login,
-  '/register' : Register,
-  '/about' : About,
+  '/register': Register,
+  '/about': About,
   '/presentations': Presentations,
+  '/presentations/create': createPresentation,
   '/joinsession': JoinSession,
-  '/account' : Account
+  '/account': Account
 };
 
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';

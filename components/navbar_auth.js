@@ -25,7 +25,7 @@ export default () => {
           </li>
 
            <li class="nav-item">
-            <a class="nav-link" href="#/presentations">Crear una presentación</a>
+            <a class="nav-link" href="#/presentations/create">Crear una presentación</a>
           </li>
 
           <li class="nav-item">
