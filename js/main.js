@@ -107,11 +107,13 @@ document.addEventListener('click', async (event) => {
             const sessionId = session.idSession;
             const userId = sessionStorage.getItem('user_id');
 
+            //CREO EL PARTICIPANTE
             const participantResponse = await createParticipant(userId, sessionId, token);
             const presentationId = participantResponse.presentationId;
 
             console.log('Asignando participante: ' + userId + 'a la session: ' + sessionId + ' con id presentación: '+presentationId);
 
+            //GUARDO ID DE SESSION (HUBGROUP) E ID DE PRESENTACIÓN
             sessionStorage.setItem('presentation_id', presentationId);
             sessionStorage.setItem('session_id', sessionId);
 
@@ -129,3 +131,4 @@ document.addEventListener('click', async (event) => {
 });
 
 // COMUNICACIÓN CON HUB
+

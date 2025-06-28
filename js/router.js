@@ -7,22 +7,20 @@ import Participant from './views/active/participant.js';
 import Presenter from './views/active/presenter.js';
 import Account from './views/account.js';
 import About from './views/about.js';
-import CreatePresentation from './views/presentations/createPresentation.js';
-import CreateSlides from './views/presentations/createSlides.js';
+import createPresentation from './views/createPresentation.js';
 
 //aca defino las rutas de mi app
 const routes = {
   '/': Landing,
   '/login': Login,
-  '/register' : Register,
-  '/about' : About,
+  '/register': Register,
+  '/about': About,
   '/presentations': Presentations,
-  '/presentations/create': CreatePresentation,
-  '/presentations/add-slide': CreateSlides,
+  '/presentations/create': createPresentation,
   '/joinsession': JoinSession,
   '/active/participant': Participant,
   '/active/presenter': Presenter,
-  '/account' : Account
+  '/account': Account
 };
 
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
