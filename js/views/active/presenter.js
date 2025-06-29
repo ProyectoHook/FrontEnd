@@ -15,6 +15,7 @@ export default async () => {
             <span id="sessionParticipantsSpan" class="text-danger fw-bold ms-2">0</span>
             <span class="ms-2">Session code:</span>
             <span id="sessionCodeSpan" class="text-danger fw-bold ms-2">-</span>
+            <button id="btn_shareLink" type="button" class="ms-3 btn btn-primary">Compartir Link de sesión</button>
         </div>
 
         <div class="container bg-light p-0 border border-dark rounded" style="width: 60%; height:80vh; overflow: hidden;">

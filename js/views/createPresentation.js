@@ -1,14 +1,17 @@
 import Navbar from "../../components/navbar_auth.js";
+import { createPresentationBackend } from "../api.js";
 
 // Aquí ponemos el HTML de la vista como template string
 const template = `
 ${Navbar()}
 <div class="container-fluid p-4">
+  <label>Título de la Presentación</label>
+  <input id="input-presentation-title" type="text" class="form-control mb-2" />
   <div class="row g-3">
     <div class="col-md-2 bg-info text-white rounded p-3">
       <label>Título</label>
       <input id="input-title" type="text" class="form-control mb-2" />
-      <label>Subtítulo</label>
+      <label>Contenido</label>
       <input id="input-subtitle" type="text" class="form-control mb-2" />
       <label>URL Imagen</label>
       <input id="input-img" type="text" class="form-control mb-2" />
@@ -81,21 +84,21 @@ function initSlideCreator() {
     const slide = slides[currentSlideIndex];
 
     document.getElementById('preview-title').innerText = slide.title;
-    document.getElementById('preview-subtitle').innerText = slide.subtitle;
+    document.getElementById('preview-subtitle').innerText = slide.content;
 
     const imgDiv = document.getElementById('preview-img');
     imgDiv.innerText = '';
-    imgDiv.style.backgroundImage = slide.imgUrl ? `url(${slide.imgUrl})` : '';
+    imgDiv.style.backgroundImage = slide.url ? `url(${slide.url})` : '';
     imgDiv.style.backgroundSize = 'cover';
     imgDiv.style.backgroundPosition = 'center';
 
-    document.getElementById('preview').style.backgroundColor = slide.bgColor;
+    document.getElementById('preview').style.backgroundColor = slide.backgroundColor;
 
     // Inputs
     inputTitle.value = slide.title;
-    inputSubtitle.value = slide.subtitle;
-    inputImg.value = slide.imgUrl;
-    inputBg.value = slide.bgColor;
+    inputSubtitle.value = slide.content;
+    inputImg.value = slide.url;
+    inputBg.value = slide.backgroundColor;
 
     toggleQuestion.checked = slide.showQuestion;
     questionSection.style.display = slide.showQuestion ? 'block' : 'none';
@@ -120,27 +123,36 @@ function initSlideCreator() {
     if (currentSlideIndex === -1) return;
     const slide = slides[currentSlideIndex];
     slide.title = inputTitle.value;
-    slide.subtitle = inputSubtitle.value;
-    slide.imgUrl = inputImg.value;
-    slide.bgColor = inputBg.value;
+    slide.content = inputSubtitle.value;
+    slide.url = inputImg.value;
+    slide.backgroundColor = inputBg.value;
     slide.question = inputQuestion.value;
+    slide.position = currentSlideIndex +1;
+    slide.IdContentType = 1;  //hardcodeado
     updatePreview();
   }
 
+  
   function addSlide() {
+
     slides.push({
       title: 'Título',
-      subtitle: 'Subtítulo',
-      imgUrl: '',
-      bgColor: '#aaaaaa',
+      content: 'Subtítulo',
+      url: '',
+      backgroundColor: '#aaaaaa',
       question: '',
       options: [],
       showQuestion: false,
+      idContentType: 1
     });
+
     currentSlideIndex = slides.length - 1;
     renderSlides();
     updatePreview();
   }
+    
+
+
 
   function moveSlide(fromIndex, toIndex) {
     if (toIndex < 0 || toIndex >= slides.length) return;
@@ -197,11 +209,35 @@ function initSlideCreator() {
     const saveBtn = document.createElement('button');
     saveBtn.className = 'btn btn-success ms-3';
     saveBtn.innerText = 'Guardar';
-    saveBtn.onclick = () => {
+    saveBtn.onclick = async () => {
+
       console.log(slides);
       alert('Guardando slides...');
+
+      alert('Guardando presentacion en backend');
+
+      var tituloPresentacion = document.getElementById('input-presentation-title').value;
+      var usuario = sessionStorage.getItem('user_id');
+
+      const presentation = {
+        title: tituloPresentacion,
+        idUserCreat: usuario,
+        activityStatus: true,
+        slides: slides
+      };
+
+      console.log("Datos que se van a enviar:");
+      console.log(presentation);
+
+      var token = document.getElementById('access_token');
+      
+      await createPresentationBackend(presentation,token)
+
+
     };
+
     slidesContainer.appendChild(saveBtn);
+
   }
 
   function addOption() {

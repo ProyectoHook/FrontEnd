@@ -3,6 +3,7 @@ import { createParticipant, getSessionByAccessCode, loginUser, getPresentation }
 import { startSignalRConnection, joinSessionGroup } from './SignalR/Manager.js';
 import { startSessionHandler, iniciarSignalR } from './Services/SignalR/signalR.js';
 import { joinSessionHandler } from './Services/SessionServices/joinSession.js';
+import qrModal from '../components/qrModal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -88,6 +89,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }   
 
+        //qrModal
+        if (event.target.matches('#btn_shareLink')) {
+        
+            alert("Mostrando modal con QRcode");
+            
+            var link_url = 'https://www.google.com' //(luego modificar)
+
+            /*
+            new QRCode(qrContainer, {    // aca pone el qr
+                text: link_url,
+                width: 128,
+                height: 128,
+                colorDark: "#000000",       //podes cambiarlo
+                colorLight: "#ffffff",    //podes cambiarlo
+                correctLevel: QRCode.CorrectLevel.H   //no se que hace, ver 
+            });
+
+            console.log("qrContainer: ", qrContainer);
+
+            */
+            const qrModalContainer = document.getElementById("modal"); 
+
+            var qrContainer = `<h1>Aqui va el  QR Code</h1>`;
+
+            qrModalContainer.innerHTML = qrModal(link_url,qrContainer);
+
+
+
+        }  
 
     });
 

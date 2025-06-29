@@ -24,25 +24,21 @@ async function iniciarSignalR(){
         slideContainer.innerHTML = showSlide(sortedSlides[slideIndex-1],"presentador");
     });
 
+
     //Conectamos
     await connection.start();
     
     console.log("Conectado como presentador");
 
-    //Nota: puedo hacer 2 cosas
-    // 1. Cargar la imagen local
-    // 2. Ejecutar invoke (cambia tb para mi) 
-    
-   
-    //Agrego a un grupo (investigar si es necesario enviarle un role)
-    //await connection.invoke("JoinSession", sessionCode, role);
+    //agrego al grupo
 
 
     await connection.invoke("JoinSession", localStorage.getItem("sessionId"));
         
     console.log("Realizando invoke para carga de primer slide...")
+
     localStorage.setItem('currentSlide',1);
-    changeSlide(connection,localStorage.getItem("sessionId"),1);
+    await changeSlide(connection,localStorage.getItem("sessionId"),1);
 
 }
 
@@ -50,11 +46,25 @@ async function iniciarSignalR(){
 
 async function changeSlide(connection,sessionId,slideIndex){
     
-    //envio msj al hub para modificar slide
-    await connection.invoke("ChangeSlide", sessionId, slideIndex);
+    console.log("envio msj al hub para modificar slide")
+
+    console.log("slideIndex: ",slideIndex);
+    console.log("sessionId: ",sessionId);
+
+    /*const slideBla ={
+              public Guid SessionId {  get; set; }
+      public int SlideIndex { get; set; }
+      public int SlideId { get; set; }
+      public string? Ask { get; set; } 
+      public string? AnswerCorrect { get; set; }
+      public List<string>? Options { get; set; }
+    }*/
+
+    //await connection.invoke("ChangeSlide", sessionId, slideIndex);
+    await connection.invoke("ChangeSlide", sessionId, slideBla);
 }
 
-      
+     
 
 async function startSessionHandler() {
 
@@ -91,7 +101,6 @@ async function startSessionHandler() {
 
     console.log("Sesión creada exitosamente");
 
-    
 }
 
 export { startSessionHandler, iniciarSignalR };

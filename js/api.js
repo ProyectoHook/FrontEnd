@@ -127,24 +127,22 @@ export async function getPresentation(presentationId, token) {
 }
 
 
-export async function createPresentation(data, token) {
+export async function createPresentationBackend(data, token) {
   try {
-    const url = `${PRESENTATION_SERVICE_URL}Presentation`;
+    const url = `${PRESENTATION_SERVICE_URL}presentation/create`;
 
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Content-Type': 'application/json'
+        //,'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({
-        title: data.title,
-        activityStatus: true,
-        idUserCreat: data.idUserCreat
-      })
+      body: JSON.stringify(data)
     });
 
     const result = await response.json();
+    console.log("datos de respuesta del backend");
+    console.log(result);
 
     if (!response.ok) {
       const error = new Error(result.message || 'Error al crear presentación');
