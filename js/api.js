@@ -131,7 +131,7 @@ export async function registerUser(requestData) {
     });
 
     if (!response.ok) {
-      throw new Error(`Error en la respuesta: ${response.status}`);
+      return false;
     }
 
     const data = await response.json();
@@ -139,6 +139,31 @@ export async function registerUser(requestData) {
     return data;
   } catch (error) {
     console.error("Error en la llamada registrar:", error);
+    throw error;
+  }
+}
+
+//fetch recuperar contraseña
+
+export async function recoverPassword(requestData) {
+  try {
+    const url = USER_SERVICE_URL + "api/User/recover";
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    console.log("Respuesta del recuperar: 200OK");
+    return true;
+  } catch (error) {
+    console.error("Error en la llamada recuperar:", error);
     throw error;
   }
 }

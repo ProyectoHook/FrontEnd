@@ -5,6 +5,7 @@ import {
   loginUser,
   getPresentation,
   registerUser,
+  recoverPassword,
 } from "./api.js";
 
 import { startSignalRConnection, joinSessionGroup } from "./SignalR/Manager.js";
@@ -30,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //click en algun hijo dentro de ese elemento
     if (event.target.closest("idDelElemento")) {
-      console.log("hace algo");
     }
   });
 });
@@ -40,6 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("submit", async (event) => {
   if (event.target.matches("#register-form")) {
     event.preventDefault();
+    const error = document.getElementById("error");
+    error.style.visibility = "hidden";
 
     const form = event.target;
 
@@ -61,14 +63,17 @@ document.addEventListener("submit", async (event) => {
         password: password.value,
       };
 
-      await registerUser(requestData);
+      const data = await registerUser(requestData);
+      if (data) {
+        dialog.showModal();
 
-      dialog.showModal();
-
-      acceptBtn.addEventListener("click", () => {
-        dialog.close();
-        window.location.hash = "#/login";
-      });
+        acceptBtn.addEventListener("click", () => {
+          dialog.close();
+          window.location.hash = "#/login";
+        });
+      } else if (!data) {
+        error.style.visibility = "visible";
+      }
     } catch (err) {
       alert(err);
     }
@@ -162,6 +167,58 @@ document.addEventListener("click", async (event) => {
       window.open("#/active/participant", "_blank");
     } catch (error) {
       alert(error);
+    }
+  }
+});
+
+//Restaurar contraseña
+
+document.addEventListener("submit", async (event) => {
+  if (event.target.matches("#recover-form")) {
+    event.preventDefault();
+    const error = document.getElementById("error");
+    const loader = document.getElementById("loader");
+    const btn = document.getElementById("sendBttn");
+    const recoverBtn = document.getElementById("recoverBtn");
+
+    const form = event.target;
+
+    error.style.visibility = "hidden";
+
+    if (!form.checkValidity()) {
+      form.classList.add("was-validated");
+      return;
+    }
+    try {
+      // Mostrar loader y deshabilitar botón
+      loader.style.display = "block";
+      recoverBtn.disabled = true;
+
+      const email = document.getElementById("email");
+      const dialog = document.getElementById("recoveryCompleted");
+
+      const requestData = {
+        email: email.value,
+      };
+
+      const data = await recoverPassword(requestData);
+
+      // Ocultar loader y habilitar botón
+      loader.style.display = "none";
+
+      if (data) {
+        dialog.showModal();
+        btn.addEventListener("click", () => {
+          dialog.close();
+          window.location.hash = "#/login";
+        });
+      } else {
+        error.style.visibility = "visible";
+      }
+    } catch (err) {
+      loader.style.display = "none";
+      btn.disabled = false;
+      alert(err);
     }
   }
 });

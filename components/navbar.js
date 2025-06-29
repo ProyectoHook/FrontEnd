@@ -20,7 +20,7 @@ export default () => {
           <a class="nav-link" href="#/login">Login</a>
         </li>
         <li class="nav-item auth">
-          <a class="nav-link" href="#/register">Register</a>
+          <a class="nav-link" href="#/register">Sign up</a>
         </li>
       </ul>
     </div>
