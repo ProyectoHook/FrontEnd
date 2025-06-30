@@ -29,7 +29,8 @@ export default () =>{
         console.log("btnFirst: ",btnFirst);
     
         btnFirst.addEventListener("click", () => {
-            changeSlide(connection,localStorage.getItem("sessionId"),1)
+            let sortedSlides = JSON.parse(localStorage.getItem("slides"));
+            changeSlide(connection,localStorage.getItem("sessionId"),1,sortedSlides[0])
             localStorage.setItem('currentSlide',1);
             console.log("btn First");
         });
@@ -38,7 +39,8 @@ export default () =>{
             let slides = JSON.parse(localStorage.getItem("slides"));  
             if( currentIndex > 1 )
             {
-                changeSlide(connection,localStorage.getItem("sessionId"),currentIndex-1)
+                let sortedSlides = JSON.parse(localStorage.getItem("slides"));
+                changeSlide(connection,localStorage.getItem("sessionId"),currentIndex-1,sortedSlides[currentIndex-2])
                 localStorage.setItem('currentSlide',Number(currentIndex)-1);
             }
             console.log("btn Previous");
@@ -48,7 +50,8 @@ export default () =>{
             let slide = document.getElementById("goToInput").value;
             if(slide >= 1 && slide <= slides.length )
             {
-                changeSlide(connection,localStorage.getItem("sessionId"),Number(slide))
+                let sortedSlides = JSON.parse(localStorage.getItem("slides"));
+                changeSlide(connection,localStorage.getItem("sessionId"),Number(slide),sortedSlides[Number(slide)-1])
                 localStorage.setItem('currentSlide',slide);
                 console.log('btn goTo --> slide:'+ slide);
             }
@@ -62,14 +65,16 @@ export default () =>{
             let slides = JSON.parse(localStorage.getItem("slides"));     
             if( currentIndex < slides.length )
             {
-                changeSlide(connection,localStorage.getItem("sessionId"),Number(currentIndex)+1)
+                let sortedSlides = JSON.parse(localStorage.getItem("slides"));
+                changeSlide(connection,localStorage.getItem("sessionId"),Number(currentIndex)+1,sortedSlides[Number(currentIndex)])
                 localStorage.setItem('currentSlide',Number(currentIndex)+1);
             }
             console.log("btn Next");
         });
         btnLast.addEventListener("click", () => {
             let slides = JSON.parse(localStorage.getItem("slides"));
-            changeSlide(connection,localStorage.getItem("sessionId"),slides.length)
+            let sortedSlides = JSON.parse(localStorage.getItem("slides"));
+            changeSlide(connection,localStorage.getItem("sessionId"),slides.length,sortedSlides[slides.length-1])
             localStorage.setItem('currentSlide',slides.length);
             console.log("btn Last");
         });
@@ -94,8 +99,25 @@ export default () =>{
 
 }
 
-async function changeSlide(connection,sessionId,slideIndex){
+//async function changeSlide(connection,sessionId,slideIndex){
     //envio msj al hub para modificar slide
-    await connection.invoke("ChangeSlide", sessionId, slideIndex);
+//    await connection.invoke("ChangeSlide", sessionId, slideIndex);
+//
+//}
 
+async function changeSlide(connection,sessionId,slideIndex,slide){
+
+    const slideRequest = {
+        sessionId : sessionId,
+        slideIndex: slideIndex,
+        slideId : slide.slideId,
+        ask : null, 
+        answerCorrect : null,
+        options : null
+    }
+
+    console.log("slideRequest: ", slideRequest);
+
+    //await connection.invoke("ChangeSlide", sessionId, slideIndex);
+   await connection.invoke("ChangeSlide", sessionId, slideRequest);
 }

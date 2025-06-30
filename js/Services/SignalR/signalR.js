@@ -38,30 +38,31 @@ async function iniciarSignalR(){
     console.log("Realizando invoke para carga de primer slide...")
 
     localStorage.setItem('currentSlide',1);
-    await changeSlide(connection,localStorage.getItem("sessionId"),1);
+    let sortedSlides = JSON.parse(localStorage.getItem("slides"));   
+    await changeSlide(connection,localStorage.getItem("sessionId"),1,sortedSlides[0]);
 
 }
 
 
 
-async function changeSlide(connection,sessionId,slideIndex){
+async function changeSlide(connection,sessionId,slideIndex,slide){
     
-    console.log("envio msj al hub para modificar slide")
-
     console.log("slideIndex: ",slideIndex);
     console.log("sessionId: ",sessionId);
 
-    /*const slideBla ={
-              public Guid SessionId {  get; set; }
-      public int SlideIndex { get; set; }
-      public int SlideId { get; set; }
-      public string? Ask { get; set; } 
-      public string? AnswerCorrect { get; set; }
-      public List<string>? Options { get; set; }
-    }*/
+    const slideRequest = {
+        sessionId : sessionId,
+        slideIndex: slideIndex,
+        slideId : slide.slideId,
+        ask : null, 
+        answerCorrect : null,
+        options : null
+    }
+
+    console.log("slideRequest: ", slideRequest);
 
     //await connection.invoke("ChangeSlide", sessionId, slideIndex);
-    await connection.invoke("ChangeSlide", sessionId, slideBla);
+   await connection.invoke("ChangeSlide", sessionId, slideRequest);
 }
 
      
