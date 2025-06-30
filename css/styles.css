@@ -1,3 +1,4 @@
+/* === Variables globales === */
 :root {
   --gris-super-claro: #ecebf1;
   --azul-oscuro: #137ca5;
@@ -6,16 +7,28 @@
   --naranja-claro: #e27662;
 }
 
-/* Navbar principal */
-.custom-navbar {
-  background-color: var(--azul-oscuro);
+/* === NAVBAR === */
+
+/* Navbar común */
+.custom-navbar,
+.custom-navbar-2 {
   height: 75px;
   padding: 0 2rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* Marca (SlideX) */
-.custom-navbar .navbar-brand {
+/* Colores de navbar */
+.custom-navbar {
+  background-color: var(--azul-oscuro);
+}
+
+.custom-navbar-2 {
+  background-color: var(--naranja);
+}
+
+/* Marca SlideX */
+.custom-navbar .navbar-brand,
+.custom-navbar-2 .navbar-brand {
   font-size: 1.8rem;
   font-weight: bold;
   color: white;
@@ -24,16 +37,26 @@
 
 .custom-navbar .navbar-brand:hover {
   color: var(--naranja);
-  text-decoration: none;
+}
+
+.custom-navbar-2 .navbar-brand:hover {
+  color: var(--azul-oscuro);
 }
 
 /* Links de navegación */
-.custom-navbar .nav-link {
+.custom-navbar .nav-link,
+.custom-navbar-2 .nav-link {
   color: white;
   font-weight: 500;
   padding: 0 1rem;
-  transition: color 0.3s ease, transform 0.2s ease;
   line-height: 75px;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.custom-navbar-2 .nav-link {
+  font-size: 1.2rem;
+  border-radius: 5%;
+  margin-left: 2rem;
 }
 
 .custom-navbar .nav-link:hover {
@@ -41,8 +64,14 @@
   transform: translateY(-2px);
 }
 
-/* Login/Register estilo diferenciado si se quiere */
-.custom-navbar .nav-item.auth .nav-link {
+.custom-navbar-2 .nav-link:hover {
+  color: var(--azul-oscuro);
+  transform: translateY(-2px);
+}
+
+/* Login/Register diferenciados */
+.custom-navbar .nav-item.auth .nav-link,
+.custom-navbar-2 .nav-item.auth .nav-link {
   border: 1px solid transparent;
   border-radius: 6px;
   padding: 0.3rem 0.8rem;
@@ -53,8 +82,14 @@
   color: white;
 }
 
+.custom-navbar-2 .nav-item.auth .nav-link:hover {
+  background-color: var(--gris-super-claro);
+  color: var(--azul-oscuro);
+}
+
 /* Botón hamburguesa */
-.custom-navbar .navbar-toggler {
+.custom-navbar .navbar-toggler,
+.custom-navbar-2 .navbar-toggler {
   border-color: white;
   background-color: white;
 }
@@ -69,95 +104,183 @@
   height: 75px;
   padding: 0 2rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-/* Marca (SlideX) */
-.custom-navbar-2 .navbar-brand {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: white;
-  transition: color 0.3s ease;
-}
-
-.custom-navbar-2 .navbar-brand:hover {
-  color: var(--azul-oscuro);
-  text-decoration: none;
-}
-
-/* Links de navegación */
-.custom-navbar-2 .nav-link {
-  border-radius: 5%;
-  font-size: 1.2rem;
-  color: white;
-  font-weight: 500;
-  padding: 0 1rem;
-  transition: color 0.3s ease, transform 0.2s ease;
-  line-height: 75px;
-  margin-left: 2rem;
-}
-
-.custom-navbar-2 .nav-link:hover {
-  color: var(--azul-oscuro);
-  transform: translateY(-2px);
-}
-
-/* Login/Register */
-.custom-navbar-2 .nav-item.auth .nav-link {
-  border: 1px solid transparent;
-  border-radius: 6px;
-  padding: 0.3rem 0.8rem;
-}
-
-.custom-navbar-2 .nav-item.auth .nav-link:hover {
-  background-color: var(--gris-super-claro);
-  color: var(--azul-oscuro);
-}
-
-/* Botón hamburguesa */
-.custom-navbar-2 .navbar-toggler {
-  border-color: white;
-  background-color: white;
-}
 
 .custom-navbar-2 .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(241,99,74,1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* Contenedor general */
+/* === LAYOUT GENERAL === */
+
+.slide-container {
+  max-width: 90%;
+  margin: 0 auto;
+  height: calc(100vh - 75px);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+input[type="text"],
+input[type="color"] {
+  font-size: 0.9rem;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Sidebar izquierda */
+.col-md-2,
+.col-md-3 {
+  background-color: #86b1e9 !important;
+  color: white;
+  border-radius: 12px;
+}
+
+.col-md-2 input,
+.col-md-3 input,
+.col-md-3 .form-check-label {
+  color: #000;
+}
+
+.form-check-input:checked {
+  background-color: #ffffff;
+  border-color: #ffffff;
+}
+
+/* === VISTA PREVIA === */
+
+.preview-box {
+  background-color: white;
+  width: 960px;
+  height: 540px;
+  max-width: 100%;
+  border-radius: 10px;
+  margin: auto;
+  padding: 40px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+#preview-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #202124;
+  margin-bottom: 10px;
+}
+
+
 .slide-container {
   max-width: 90%;
   margin: 0 auto;
   height: calc(100vh - 75px); /* Ajustá si tu navbar es más alta o más baja */
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+
+#preview-subtitle {
+  font-size: 1.4rem;
+  color: #5f6368;
 }
 
-/* Título */
+#preview-img {
+  flex-grow: 1;
+  background-color: #ddd;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+/* === SLIDES MINIATURAS === */
+
+#slides-container {
+  background-color: #bdbaba;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow-x: auto;
+  min-height: 72px;
+  flex-wrap: wrap;
+}
+
+.slide-thumb {
+  width: 80px;
+  height: 70px;
+  background-color: #ffffff;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  margin-right: 8px;
+  text-align: center;
+  line-height: 36px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.2s ease;
+}
+
+.slide-thumb.active-slide {
+  border-color: #2d80ee;
+  background-color: #e8f0fe;
+}
+
+/* Botones de mover slide */
+.move-btn {
+  position: absolute;
+  top: -6px;
+  background: #fff;
+  border: 1px solid #ccc;
+  font-size: 0.8rem;
+  padding: 0 5px;
+  border-radius: 4px;
+  color: #333;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.move-left {
+  left: -8px;
+}
+
+.move-right {
+  right: -8px;
+}
+
+/* === CONTENIDO SLIDE === */
+
 .slide-title {
   background-color: #f8d7da;
   padding: 1rem;
   text-align: center;
 }
 
-/* Contenedor del slide con tamaño fijo (por ejemplo, 720px de alto) */
 .slide-img {
   background-color: #d1ecf1;
-  height: 720px; /* Tamaño fijo del contenedor del slide */
+  height: 720px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 
-/* Imagen dentro del slide, se ajusta al contenedor sin deformarse */
 #slide-img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
 }
 
-/* Panel de pregunta */
+/* === PREGUNTAS === */
+
 .question-container {
   background-color: #d4edda;
   padding: 1rem;
@@ -257,4 +380,102 @@
   color: rgb(189, 15, 15);
   font-size: 15;
   margin-top: 0.5rem;
+
+
+/* formato de slides */
+
+#slideCardContainer{
+  height: 100%;
+}
+
+.custom-text-card {
+  height: 100%;
+  text-align:center;
+}
+
+.custom-img-card-onlyImg{
+  height: 60vh; /* 75% altura del contenedor total */
+  flex-direction: colum;
+  /*display: block !important;
+  flex: 0 0 75%;
+  object-fit: cover; /* hace que la imagen se adapte y recorte si es necesario *
+  height: auto;*/
+}
+
+/*
+.custom-img-card {
+  height: 300px; /* o cualquier altura que quieras *
+  display: block !important;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.custom-img-card-img {
+  flex: 0 0 75%;
+  object-fit: cover; /* hace que la imagen se adapte y recorte si es necesario *
+  height: auto;
+}
+
+.custom-img-card-body {
+  flex: 0 0 25%;
+  padding: 0.5rem;
+  overflow-y: auto; /* por si el texto es muy largo *
+}*/
+
+.custom-img-card {
+  height: 60vh; /* 75% altura del contenedor total */
+  flex-direction: colum;
+}
+
+.custom-img-card-img {
+  max-height: 60vh;
+  max-width: 100%;
+  height: auto;
+  width: auto;
+  display: block;  
+  object-fit: contain;
+  background-color: #f0f0f0; /* opcional: para ver límites */
+}
+
+.custom-img-card-img-onlyImg{
+  height: 100%;
+    max-height: max-content;
+    max-width: 100%;
+    width: auto;
+    display: block;
+    object-fit: contain;
+    margin: auto;
+    background-color: #f0f0f0;
+}
+
+.custom-img-card-body {
+  flex: 1; /* 1/4 = 25% */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.custom-ask-card{
+  height: 100%;
+}
+
+.contenedor {
+  display: grid;
+  place-items: center;
+  height: 200px;
+}
+.option-box {
+  background: #fff;
+  padding: 6px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 8px;
+}
+
+.option-box input[type="text"] {
+  flex-grow: 1;
 }

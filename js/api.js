@@ -167,3 +167,48 @@ export async function recoverPassword(requestData) {
     throw error;
   }
 }
+
+
+export async function createPresentationBackend(data, token) {
+  try {
+    const url = `${PRESENTATION_SERVICE_URL}presentation/create`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+        //,'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+    console.log("datos de respuesta del backend");
+    console.log(result);
+
+    if (!response.ok) {
+      const error = new Error(result.message || 'Error al crear presentación');
+      error.status = response.status;
+      throw error;
+    }
+
+    return result;
+
+  } catch (error) {
+    console.error('Error al crear presentación:', error);
+    throw error;
+  }
+}
+
+
+export async function createSlide(data) {
+  const res = await fetch(`${API_URL}/Slide`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) throw new Error("Error al crear slide");
+
+  return await res.json();
+}

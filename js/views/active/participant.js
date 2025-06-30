@@ -2,6 +2,7 @@ import { startSignalRConnection, joinSessionGroup, getSlideActualIndex, onSlideC
 import Navbar from '../../../components/navbar_auth.js';
 
 export default async () => {
+    
     const sessionId = sessionStorage.getItem('session_id');
     if (!sessionId) {
         window.location.href = '#/error';
@@ -19,7 +20,6 @@ export default async () => {
 
     //Tomar los datos de la presentación
     const presentation = JSON.parse(sessionStorage.getItem("presentation"));
-    
 
 
     // Función para formatear fechas (opcional)

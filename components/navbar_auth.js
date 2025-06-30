@@ -17,7 +17,7 @@ export default () => {
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#/joinsession">Unirse a una sesión</a>
+            <a class="nav-link" href="#/joinsession">Crear / Unirse a una sesión</a>
           </li>
 
           <li class="nav-item">
@@ -25,7 +25,7 @@ export default () => {
           </li>
 
            <li class="nav-item">
-            <a class="nav-link" href="#/presentations">Crear una presentación</a>
+            <a class="nav-link" href="#/presentations/create">Crear una presentación</a>
           </li>
 
           <li class="nav-item">
