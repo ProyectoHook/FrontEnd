@@ -24,6 +24,23 @@ async function iniciarSignalR(){
         slideContainer.innerHTML = showSlide(sortedSlides[slideIndex-1],"presentador");
     });
 
+    connection.on("UpdateStatistics", (slideStats) => {
+
+        // nota: 
+        //
+        // slideStas = {
+        //  int Total,
+        //  int Correct,
+        //  int Incorrect,
+        //  double CorrectPercentage
+        // }
+
+        alert("Recibiendo respuesta - ESTOY EN PRESENTADOR")
+        
+        console.log("respuesta: ",slideStats);
+        
+    });
+
 
     //Conectamos
     await connection.start();

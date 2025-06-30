@@ -4,6 +4,7 @@ import { startSignalRConnection, joinSessionGroup } from './SignalR/Manager.js';
 import { startSessionHandler, iniciarSignalR } from './Services/SignalR/signalR.js';
 import { joinSessionHandler } from './Services/SessionServices/joinSession.js';
 import qrModal from '../components/qrModal.js';
+import { connection } from './Services/SessionServices/joinSession.js'; //conexion de participante
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -78,11 +79,36 @@ document.addEventListener('DOMContentLoaded', () => {
         //sendAnswer
         if (event.target.matches('#sendAnswer-btn')) {
         
-            alert("Enviando respuesta .... falta el endpoint supongo... algo como POST answer(session,user,slideId,answerPicked. El endpoint tb valida si ya mando respuesta ese usuario para esa sesión. Ver como hacer para que si no contesto nada, y el profe pasa la diapo que no pueda volver (puede verificar el currentSlide, si no estas en esa diapo => ya paso la diapo => no te deja. tb podes guardar algo como una lista de (currentSlide,enableBtn) que los deshabilite si se adelantan o retroceden las diapos ");
-            
-            document.getElementById(listItem1).value
+            alert("Enviando respuesta (el endpoint deberia validar si el usuario ya respondio en esta sesion). Ver como hacer para que si no contesto nada, y el profe pasa la diapo que no pueda volver (puede verificar el currentSlide, si no estas en esa diapo => ya paso la diapo => no te deja. tb podes guardar algo como una lista de (currentSlide,enableBtn) que los deshabilite si se adelantan o retroceden las diapos ");
+
+            var userId = sessionStorage.getItem("user_id");
+            var sessionId = JSON.parse(sessionStorage.getItem("sessionId"));
+            var currentSlideIndex = localStorage.getItem('currentSlide');
+            var sortedSlides = JSON.parse(localStorage.getItem("slides"));
+            var currentSlide = sortedSlides[currentSlideIndex-1];
+
+            //console.log("Answer: ", answerPicked);  // --> ver qué conviene mandarle aca
+
+            //document.getElementById(listItem1).value
+            //document.getElementById(listItem2).value
+            //document.getElementById(listItem3).value
             
 
+            const answerRequest = {
+                sessionId : sessionId,
+                slideId : currentSlide.idSlide,
+                userId : userId,
+                answer : "banana"
+            }
+
+            console.log("answerRequest")
+            console.log(answerRequest)
+
+            alert("enviando")
+
+            await connection.invoke("SubmitAnswer", sessionId, answerRequest);
+
+            alert("Si responde se deshabilita botón");
 
             const answerBtn = document.getElementById("sendAnswer-btn");
             answerBtn.classList.add('disabled');

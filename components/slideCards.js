@@ -10,10 +10,6 @@ export function showSlideWaiting(){
 
 export function showSlide(slide,role) {
 
-    console.log("renderizando slide");
-    console.log("esta llegando undefined");
-    console.log(slide)
-
 
     switch(slide.idContentType){
 
@@ -30,7 +26,7 @@ export function showSlide(slide,role) {
 
         case(4):
             console.log("renderizando card tipo question");
-            return askSlide(slide);
+            return askSlide(slide,role);
         break;
 
         default:
@@ -76,7 +72,16 @@ function imgSlide(slide){
 }
 
 
-function askSlide(slide){
+function askSlide(slide,role){
+
+    var btn_disabled = ''
+    var btn_type = "btn-primary"
+
+    if(role == "presentador")
+    {
+        btn_disabled = "disabled"
+        btn_type = "btn-secondary"
+    }
 
     var option1 = slide.ask.options[0].optionText;
     var option2 = slide.ask.options[1].optionText;
@@ -115,7 +120,7 @@ function askSlide(slide){
                 </div>
             </li>
             <div class="justify-content-center">
-                <button id="sendAnswer-btn" class="btn btn-primary w-25">Enviar respuesta</button>
+                <button id="sendAnswer-btn" class="btn ${btn_type} w-25" ${btn_disabled}>Enviar respuesta</button>
             </div>
         </ul>
     </div>`;

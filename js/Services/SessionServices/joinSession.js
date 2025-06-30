@@ -40,6 +40,12 @@ export async function joinSession(sessionCode) {
         }
     }
 
+
+export const connection = new signalR.HubConnectionBuilder()
+                .withUrl(SIGNALR_HUB)
+                .configureLogging(signalR.LogLevel.Information)
+                .build();
+
 export async function joinSessionHandler() {
 
             console.log("Iniciando joinSessionHandler...");
@@ -100,15 +106,11 @@ export async function joinSessionHandler() {
             console.log("Inicio de sesion exitoso.");
             console.log("iniciando conexion SignalR");
 
-            const connection = new signalR.HubConnectionBuilder()
-                .withUrl(SIGNALR_HUB)
-                .configureLogging(signalR.LogLevel.Information)
-                .build();
-
 
             //defino lo que sucede cuando reciba mensaje
             connection.on("ReceiveSlide", (slideIndex) => {
                 console.log("MENSAJE RECIBIDO - PARTICIPANTE");
+                localStorage.setItem('currentSlide',slideIndex);
                 let sortedSlides = JSON.parse(localStorage.getItem("slides"));                
                 const slideContainer = document.getElementById('slideCardContainer');
 
@@ -116,6 +118,23 @@ export async function joinSessionHandler() {
                 console.log(sortedSlides[slideIndex-1]);
 
                 slideContainer.innerHTML = showSlide(sortedSlides[slideIndex-1],"participante");
+            });
+
+            connection.on("UpdateStatistics", (slideStats) => {
+            
+                    // nota: 
+                    //
+                    // slideStas = {
+                    //  int Total,
+                    //  int Correct,
+                    //  int Incorrect,
+                    //  double CorrectPercentage
+                    // }
+            
+                    alert("Recibiendo respuesta - ESTOY EN PARTICIPANTE")
+                    
+                    console.log("respuesta: ",slideStats);
+                    
             });
  
 
