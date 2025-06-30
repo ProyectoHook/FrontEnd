@@ -18,9 +18,26 @@ export default async () => {
             <button id="btn_shareLink" type="button" class="ms-3 btn btn-primary">Compartir Link de sesión</button>
         </div>
 
-        <div class="container bg-light p-0 border border-dark rounded" style="width: 60%; height:80vh; overflow: hidden;">
-            <div id="slideCardContainer">
-                ${showSlideWaiting()}
+        <div class="container">
+            <div class="row">
+
+                <div class="col">
+                </div>
+
+                <div class="col-3 container bg-light p-0 border border-dark rounded" style="width: 60%; height:80vh; overflow: hidden;">
+                    <div id="slideCardContainer">
+                        ${showSlideWaiting()}
+                    </div>
+                </div>
+        
+                <div class="col">
+                    <div>
+                        <h6 class="text-center">Manos levantadas</h6>
+                        <ul id="listaDeManosLevantadas" class="list-group">
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </div>
 

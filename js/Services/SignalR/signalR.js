@@ -10,6 +10,12 @@ export const connection = new signalR.HubConnectionBuilder()
         .build();
 
 
+function noEstaEnLaLista(userId)
+{
+   alert("arreglar esta funcion...")
+   return true;
+}
+
 async function iniciarSignalR(){
 
     console.log("funcion iniciarSignalR")
@@ -40,6 +46,21 @@ async function iniciarSignalR(){
         console.log("respuesta: ",slideStats);
         
     });
+
+    connection.on("ChangeRaiseHandTail", (userId,userName,status_btn) => {
+
+        const listaDeManos = document.getElementById("listaDeManosLevantadas");
+
+        if(noEstaEnLaLista(userId) && status_btn)
+        {
+            listaDeManos.innerHTML += `<li id="${userId}" class="list-group-item">${userName}</li>`;
+        }
+        else if(!noEstaEnLaLista(userId) && !status_btn)
+        {
+            //lo tenes que quitar
+        }
+
+    })
 
 
     //Conectamos

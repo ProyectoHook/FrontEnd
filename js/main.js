@@ -28,6 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', async (event) => {
 
         console.log("click");
+        
+        //Descomentar para debug
+        //console.log(event.target);
 
         //click en elemento exacto  -->  if (event.target.matches("#join-session-btn")) { ...  }
         //click en algun hijo dentro de ese elemento --> if (event.target.closest('idDelElemento')) { ... }
@@ -133,17 +136,44 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             console.log("qrContainer: ", qrContainer);
-
             */
+
             const qrModalContainer = document.getElementById("modal"); 
-
             var qrContainer = `<h1>Aqui va el  QR Code</h1>`;
-
             qrModalContainer.innerHTML = qrModal(link_url,qrContainer);
 
+        } 
+        
+        if (event.target.closest('#raise-hand-btn')) {
 
+            //tenes que enviarle el estado del boton
+            //Si se cae la conexion del participante se reinicia el estado pero no la lista
 
-        }  
+            const btn = document.getElementById("raise-hand-btn");
+            var raiseHand_btn;
+
+            if(btn.classList.contains("btn-primary"))
+            {
+                alert("levantando la mano")
+                btn.classList.add("btn-warning");
+                btn.classList.remove("btn-primary");
+                raiseHand_btn = true;
+            }
+            else
+            {
+                alert("Bajando la mano")
+                btn.classList.add("btn-primary");
+                btn.classList.remove("btn-warning");
+                raiseHand_btn = false;
+            }
+
+            var userId = sessionStorage.getItem("user_id");
+            var sessionId = JSON.parse(sessionStorage.getItem("sessionId"));
+            var userName = "Te falta enviar el userName"
+
+            await connection.invoke("RaiseHand",sessionId,userId,userName,raiseHand_btn);
+       
+        }
 
     });
 
@@ -180,6 +210,7 @@ document.addEventListener('submit', async (event) => {
             sessionStorage.setItem('role', role);
             sessionStorage.setItem('token_type', token_type);
             sessionStorage.setItem('user_id', user_id);
+            alert("falta traer el username y guardarlo");
 
             // Redirección a /SesionIniciada
             location.hash = '#/presentations';
