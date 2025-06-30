@@ -119,7 +119,7 @@ function askSlide(slide,role){
                     </label>
                 </div>
             </li>
-            <div class="justify-content-center">
+            <div class="d-flex justify-content-center m-2">
                 <button id="sendAnswer-btn" class="btn ${btn_type} w-25" ${btn_disabled}>Enviar respuesta</button>
             </div>
         </ul>
