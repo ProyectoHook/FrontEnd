@@ -1,75 +1,60 @@
 import Navbar from '../../components/navbar_auth.js';
 
 export default () => {
-    return `
-      ${Navbar()}
-      <div class="container">
+  return `
+    ${Navbar()}
+    <div class="container mt-4">
 
-        <h2 class="mt-4">Crear una sesión ahora</h2>
+      <h2 class="mb-3">Crear una sesión ahora</h2>
 
-        <div class="d-flex m-1 mx-auto justify-content-center align-items-center">
-            <div class="m-3">
-                <span>Descripción (opcional):</span>
-                <input id="descriptionInput" class="ms-4" placeholder="Escriba una descripcion" />
-            </div>
-            <div class="m-3">
-                <span>Max Participants:</span>
-                <input id="maxParticipantsInput" class="ms-4" placeholder="#" />
-            </div>
-            <div class="m-3">
-                <span>PresentationId:</span>
-                <input id="presentationIdInput" class="ms-4" placeholder="#" />
-            </div>
-        </div> 
-
-        <div class="d-flex m-1 mx-auto justify-content-center align-items-center">
-            <span>(Si arroja error verificar que los campos estén completos)</span>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="descriptionInput" class="form-label">Descripción (opcional):</label>
+          <input id="descriptionInput" class="form-control" placeholder="Escriba una descripción" />
         </div>
-
-        <div class="d-flex m-1 justify-content-center align-items-center">
-            <div class="m-3">
-                <button id="start-session-btn" class="btn btn-primary">Start Session</button>
-            </div>
-        </div> 
-
-        <h2 class="mt-4">Crear una sesión para unirse luego</h2>     
-
-        <div class="row mt-4">
-          <div class="col">
-            <input type="text" id="create-session-access-code" class="form-control" 
-              placeholder="Código de sesión" maxlength="6" disabled>
-          </div>
-          <div class="col">
-            <button id="create-session-btn" class="btn btn-primary w-100">
-              Generar código de sesión (ver si queremos tener esta feature)
-            </button>
-          </div>
+        <div class="col-md-4">
+          <label for="maxParticipantsInput" class="form-label">Máx. participantes:</label>
+          <input id="maxParticipantsInput" class="form-control" placeholder="Ej: 10" />
         </div>
-
-        <h2 class="mt-4">Unirse a una sesión</h2>       
-
-        <div class="d-flex m-1 mx-auto justify-content-center align-items-center">
-          <div class="m-1" style="width: 30%;">
-            <span>Session code:</span>
-            <input id="sessionCodeInput" class="ms-5" style="width: 50%;" placeholder="Escriba el codigo de sesion..." />
-          </div>
-          <div class="m-3">
-            <button id="join-session-button" class="btn btn-primary">Join Session</button>
-          </div>
-        </div> 
-        
-        <div class="row mt-4">
-          <div class="col">
-            <input type="text" id="join-session-access-code" class="form-control" 
-              placeholder="Código de sesión" maxlength="6">
-          </div>
-          <div class="col">
-            <button id="join-session-btn" class="btn btn-primary w-100">
-              Unirse (este boton nop)
-            </button>
-          </div>
+        <div class="col-md-4">
+          <label for="presentationIdInput" class="form-label">ID de Presentación:</label>
+          <input id="presentationIdInput" class="form-control" placeholder="Ej: 123" />
         </div>
-
       </div>
-    `;
-  };
+
+      <div class="text-center text-muted mb-2">
+        <small>(Si arroja error, verificar que los campos estén completos)</small>
+      </div>
+
+      <div class="text-center mb-5">
+        <button id="start-session-btn" class="btn btn-primary px-4">Iniciar Sesión</button>
+      </div>
+
+      <h2 class="mb-3">Crear una sesión para unirse luego</h2>
+
+      <div class="row mb-5">
+        <div class="col-md-6">
+          <input type="text" id="create-session-access-code" class="form-control" placeholder="Código de sesión" maxlength="6" disabled />
+        </div>
+        <div class="col-md-6">
+          <button id="create-session-btn" class="btn btn-primary w-100">
+            Generar código de sesión
+          </button>
+        </div>
+      </div>
+
+      <h2 class="mb-3">Unirse a una sesión</h2>
+
+      <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+          <label for="sessionCodeInput" class="form-label">Código de sesión:</label>
+          <input id="sessionCodeInput" class="form-control" placeholder="Escriba el código de sesión..." />
+        </div>
+        <div class="col-md-6 mt-3 mt-md-0 text-md-start">
+          <button id="join-session-button" class="btn btn-primary">Unirse a la sesión</button>
+        </div>
+      </div>
+
+    </div>
+  `;
+};

@@ -170,3 +170,54 @@ export async function createSlide(data) {
 
   return await res.json();
 }
+
+//fetch para registrar usuario
+
+export async function registerUser(requestData) {
+  try {
+    const url = USER_SERVICE_URL + "api/User/register";
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    const data = await response.json();
+    console.log("Respuesta del registrar:", data);
+    return data;
+  } catch (error) {
+    console.error("Error en la llamada registrar:", error);
+    throw error;
+  }
+}
+
+//fetch recuperar contraseña
+
+export async function recoverPassword(requestData) {
+  try {
+    const url = USER_SERVICE_URL + "api/User/recover";
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    console.log("Respuesta del recuperar: 200OK");
+    return true;
+  } catch (error) {
+    console.error("Error en la llamada recuperar:", error);
+    throw error;
+  }
+}

@@ -1,4 +1,4 @@
-import Navbar from '../../../components/navbar.js'
+import Navbar from "../../../components/navbar.js";
 export default () => {
   return `
     ${Navbar()}
@@ -17,6 +17,7 @@ export default () => {
                   id="email" 
                   name="email" 
                   placeholder="ejemplo@correo.com" 
+                  autocomplete="email"
                   required
                 >
                 <div class="invalid-feedback">
@@ -32,19 +33,20 @@ export default () => {
                   id="password" 
                   name="password" 
                   placeholder="Contraseña" 
+                  autocomplete="current-password" 
                   required
                 >
-                <p class="card-text mt-3"><a href="#">Olvidaste la contraseña?</a><p>
+                <p class="card-text mt-3"><a href="#/recoverPassword" id="recoverPassword">Olvide mi contraseña</a><p>
                 <div class="invalid-feedback">
                   La contraseña debe tener al menos 6 caracteres.
                 </div>
               </div>
 
-              <button id="login-btn" type="submit" class="btn btn-primary w-100">Login</button>
+              <button id="login-btn" type="submit" class="btn btn-primary w-100">Iniciar sesion</button>
             </form>
 
-            <div class="my-3">
-              <button id="go-to-register-btn" class="btn btn-secondary">Registrarme</button>
+            <div id="signUpButton" class="signUpDiv" class="my-3">
+              <a id="go-to-register-btn" class ="singUpButton"href="#/register">Registrarme</a>
             </div>
 
           </div>
