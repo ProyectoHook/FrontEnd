@@ -14,11 +14,19 @@ export function pintarSlide(slide, role) {
 
     if (slide.ask == null) {
         console.log("renderizando card tipo imagen");
-        return slideSinPregunta(slide,role);
+        return slideSinPregunta(slide, role);
     }
 
     console.log("renderizando card tipo question");
-    return slideConPregunta(slide,role);
+
+    switch (role) {
+        case 1:
+            return slideConPreguntaPresentador(slide);
+        case 2:
+            return slideConPreguntaParticipante(slide);
+        default:
+            alert('ERROR');
+    }
 }
 
 export function showSlide(slide, role) {
@@ -51,7 +59,6 @@ export function showSlide(slide, role) {
 
 }
 
-
 function textSlide(slide) {
 
     return `
@@ -65,71 +72,95 @@ function textSlide(slide) {
 
 }
 
-function slideConPregunta(slide) {
+function slideConPreguntaPresentador(slide) {
     return `
-      <div class="container">
-        <!-- Título arriba, centrado -->
-        <h2 class="mb-4 text-center fw-bold">${slide.title ?? 'Sin título'}</h2>
+      <div class="presenter-wrapper">
+        <h4 class="text-center text-primary fw-bold mb-4">${slide.title ?? "Sin título"}</h4>
   
-        <div class="row align-items-start">
-          <!-- Columna imagen -->
-          <div class="col-md-6 mb-3">
-            <div class="bg-light rounded shadow-sm" style="overflow: hidden; height: 350px;">
-              ${
-                slide.url
-                  ? `<img src="${slide.url}" alt="Slide Image" class="img-fluid w-100 h-100" style="object-fit: cover;">`
-                  : `<div class="d-flex justify-content-center align-items-center h-100 text-muted">Sin imagen</div>`
-              }
-            </div>
+        <div class="presenter-content">
+          <div class="presenter-image">
+            ${slide.url
+            ? `<img src="${slide.url}" alt="Slide Image" class="presenter-image-img">`
+            : `<div class="text-muted text-center">Sin imagen</div>`
+        }
           </div>
   
-          <!-- Columna pregunta -->
-          <div class="col-md-6">
-            <div class="card border-primary h-100">
-              <div class="card-body d-flex flex-column">
-                <h5 class="card-title text-primary">${slide.ask?.name ?? 'Sin pregunta'}</h5>
-                <p class="card-text text-muted mb-1">${slide.ask?.description ?? ''}</p>
-                <p class="fw-semibold mb-3">${slide.ask?.askText ?? ''}</p>
+          <div class="presenter-question">
+            <h6 class="presenter-question-title">${slide.ask?.name ?? "Sin pregunta"}</h6>
+            <p class="presenter-question-description">${slide.ask?.description ?? ""}</p>
+            <p class="presenter-question-text">${slide.ask?.askText ?? ""}</p>
   
-                ${
-                  slide.ask?.options?.length > 0
-                    ? slide.ask.options
-                        .map(
-                          (option) => `
-                  <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" id="option-${option.idOption}" name="option" value="${option.idOption}">
-                    <label class="form-check-label" for="option-${option.idOption}">
-                      ${option.optionText ?? ''}
-                    </label>
-                  </div>
-                  `
-                        )
-                        .join('')
-                    : '<p class="text-muted">No hay opciones disponibles</p>'
-                }
+            ${slide.ask?.options?.length
+            ? slide.ask.options.map(o => `
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="option-${o.idOption}" disabled>
+                  <label class="form-check-label" for="option-${o.idOption}">
+                    ${o.optionText ?? ""}
+                  </label>
+                </div>`).join("")
+            : `<p class="text-muted">No hay opciones disponibles</p>`
+        }
+          </div>
+        </div>
   
-                <button type="button" id="btn-save-ask-${slide.idSlide}" class="btn btn-primary mt-auto align-self-start">Guardar respuesta</button>
-              </div>
+        <ul class="list-group list-group-horizontal-md mt-4 flex-wrap justify-content-center small">
+          <li class="list-group-item"><strong>IdSlide:</strong> ${slide.idSlide}</li>
+          <li class="list-group-item"><strong>Posición:</strong> ${slide.position}</li>
+          <li class="list-group-item"><strong>Creado:</strong> ${slide.createAt ? new Date(slide.createAt).toLocaleString() : "N/A"}</li>
+          <li class="list-group-item"><strong>Modificado:</strong> ${slide.modifiedAt ? new Date(slide.modifiedAt).toLocaleString() : "N/A"}</li>
+          <li class="list-group-item"><strong>IdContentType:</strong> ${slide.idContentType ?? "N/A"}</li>
+          <li class="list-group-item"><strong>IdAsk:</strong> ${slide.ask?.idAsk ?? "N/A"}</li>
+          <li class="list-group-item"><strong>IdPresentation:</strong> ${slide.idPresentation ?? "N/A"}</li>
+        </ul>
+      </div>
+    `;
+}
+
+
+
+function slideConPreguntaParticipante(slide) {
+    return `
+      <div class="participant-wrapper">
+        <div class="participant-slide">
+          <div class="card shadow-sm h-100">
+            <div class="card-header text-center">
+              <h5 class="card-title mb-0 text-primary">${slide.title ?? 'Sin título'}</h5>
+            </div>
+            <div class="card-body participant-image" style="background-color: ${slide.backgroundColor ?? '#fff'};">
+              ${slide.url
+            ? `<img src="${slide.url}" alt="Slide Image" class="participant-image-img">`
+            : `<div class="text-muted text-center w-100">Sin imagen</div>`
+        }
             </div>
           </div>
         </div>
   
-        <!-- Info técnica abajo -->
-        <ul class="list-group list-group-horizontal mt-4 justify-content-center">
-          <li class="list-group-item"><strong>IdSlide:</strong> ${slide.idSlide}</li>
-          <li class="list-group-item"><strong>Posición:</strong> ${slide.position}</li>
-          <li class="list-group-item"><strong>Creado:</strong> ${slide.createAt ? new Date(slide.createAt).toLocaleString() : 'N/A'}</li>
-          <li class="list-group-item"><strong>Modificado:</strong> ${slide.modifiedAt ? new Date(slide.modifiedAt).toLocaleString() : 'N/A'}</li>
-          <li class="list-group-item"><strong>IdContentType:</strong> ${slide.idContentType ?? 'N/A'}</li>
-          <li class="list-group-item"><strong>IdAsk:</strong> ${slide.ask?.idAsk ?? 'N/A'}</li>
-          <li class="list-group-item"><strong>IdPresentation:</strong> ${slide.idPresentation ?? 'N/A'}</li>
-        </ul>
+        <div class="participant-question">
+          <div>
+            <h6 class="fw-bold text-primary">${slide.ask?.name ?? 'Sin pregunta'}</h6>
+            <p class="text-muted mb-1">${slide.ask?.description ?? ''}</p>
+            <p class="fw-semibold">${slide.ask?.askText ?? ''}</p>
+  
+            ${slide.ask?.options?.length
+            ? slide.ask.options.map(o => `
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="option-${o.idOption}" value="${o.idOption}">
+                    <label class="form-check-label" for="option-${o.idOption}">
+                      ${o.optionText ?? ''}
+                    </label>
+                  </div>`).join('')
+            : `<p class="text-muted">No hay opciones disponibles</p>`
+        }
+          </div>
+  
+          <div class="text-end mt-3">
+            <button id="btn-save-ask-${slide.idSlide}" class="btn btn-sm btn-primary">Guardar respuesta</button>
+          </div>
+        </div>
       </div>
     `;
-  }
-  
-  
-  
+}
+
 
 
 

@@ -26,7 +26,7 @@ async function iniciarSignalR(){
         
         console.log("MENSAJE RECIBIDO - PRESENTADOR");
         let sortedSlides = JSON.parse(localStorage.getItem("slides"));                
-        const slideContainer = document.getElementById('slideCardContainer');   
+        const slideContainer = document.getElementById('slide-container');   
         //slideContainer.innerHTML = showSlide(sortedSlides[slideIndex-1],"presentador");
         slideContainer.innerHTML = pintarSlide(sortedSlides[slideIndex-1],1);
     });

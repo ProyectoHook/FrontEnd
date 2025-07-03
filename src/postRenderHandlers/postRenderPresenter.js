@@ -3,7 +3,7 @@ import { connection } from '../../js/Services/SignalR/signalR.js'
 export default () =>{
 
     //se hace en un postRender para asegurarse que se haya cargado el DOM
-    var accessCode = sessionStorage.getItem("accessCode");
+    var accessCode = localStorage.getItem("accessCode");
 
     let sessionStatus = document.getElementById('sessionStatusSpan');
     console.log("sessionStatus")

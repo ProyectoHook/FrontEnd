@@ -1,31 +1,33 @@
-import { showSlideWaiting } from '../../../components/slideCards.js';
+import Navbar from "../../../components/navbar_auth.js";
 
-export default async (sessionCode) => {
+export default async (sessionCode, slide) => {
+  return `
+    ${Navbar()}
 
-    return  ` 
+    <div class="slide-wrapper d-flex flex-column overflow-hidden px-3 py-2">
 
-    <div class="m-1 d-flex justify-content-center align-items-center">
-        <span class="ms-2">Status:</span>
-        <span id="sessionStatusSpan" class="text-danger fw-bold ms-2"> Not Connected </span>
-        <span class="ms-2">Session code:</span>
-        <span id="sessionCodeSpan" class="text-danger fw-bold ms-2">-</span>
-    </div>
+      <!-- Estado de sesión -->
+      <div class="d-flex justify-content-center align-items-center gap-2 mb-2">
+        <span>Status:</span>
+        <span id="sessionStatusSpan" class="text-danger fw-bold">Not Connected</span>
+        <span>Session code:</span>
+        <span id="sessionCodeSpan" class="text-danger fw-bold">${sessionCode ?? "-"}</span>
+      </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col">
-            </div>
-            <div class="col-3 container bg-light p-0 border border-dark rounded " style="width: 75%; height:90vh; overflow: hidden;">
-                <div id="slideCardContainer">
-                    ${showSlideWaiting()}
-                </div>
-            </div>
-            <div class="col">
-                <button id="raise-hand-btn" type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                    <i class="bi bi-person-raised-hand fs-1"></i>
-                </button>
-            </div>
+      <!-- Slide + botón levantar mano -->
+      <div class="row flex-grow-1 m-0 g-2">
+        
+        <div id="slide-container" class="col-11 p-0 d-flex flex-column border rounded shadow-sm bg-white overflow-hidden">
+          <!-- contenido dinámico aquí -->
         </div>
-    </div>`; 
 
-}
+        <div class="col-1 d-flex flex-column justify-content-start align-items-center p-0">
+          <button id="raise-hand-btn" type="button" class="btn btn-primary w-100 h-100 d-flex justify-content-center align-items-center" title="Levantar mano">
+            <i class="bi bi-person-raised-hand fs-1"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  `;
+};

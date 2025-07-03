@@ -217,7 +217,7 @@ function initSlideCreator() {
       alert('Guardando presentacion en backend');
 
       var tituloPresentacion = document.getElementById('input-presentation-title').value;
-      var usuario = sessionStorage.getItem('user_id');
+      var usuario = localStorage.getItem('user_id');
 
       const presentation = {
         title: tituloPresentacion,

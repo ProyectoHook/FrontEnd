@@ -1,6 +1,6 @@
 
 import { SESSION_SERVICE_URL, SIGNALR_HUB } from '../../../data/config.js'
-import { showSlide } from '../../../components/slideCards.js'
+import { pintarSlide, showSlide } from '../../../components/slideCards.js'
 
 
 export async function joinSession(sessionCode) {
@@ -9,9 +9,9 @@ export async function joinSession(sessionCode) {
 
         const url = SESSION_SERVICE_URL + 'session/join/private/' + sessionCode;
 
-        const jwt = 'Bearer ' + sessionStorage.getItem("access_token");
-        console.log("jwt para iniciar conexion como participante")
-        console.log(jwt);
+        const jwt = 'Bearer ' + localStorage.getItem("access_token");
+        console.log("jwt para iniciar conexion como participante",jwt)
+        
 
         try
         {
@@ -50,7 +50,7 @@ export async function joinSessionHandler() {
 
             console.log("Iniciando joinSessionHandler...");
 
-            const sessionCode = document.getElementById('sessionCodeInput').value;
+            const sessionCode = localStorage.getItem('accessCode');
 
             const json = await joinSession(sessionCode);
 
@@ -61,7 +61,7 @@ export async function joinSessionHandler() {
             console.log(json);
 
             console.log("almacenando sessionId")
-            sessionStorage.setItem("sessionId",JSON.stringify(json.sessionId));
+            localStorage.setItem("sessionId",JSON.stringify(json.sessionId));
 
             var sortedSlides = json.presentation.slides;
             //orden por posicion ascendente
@@ -73,17 +73,13 @@ export async function joinSessionHandler() {
             console.log("sorted slides")
             console.log(sortedSlides)
 
-            //muestro la diapositiva actual - version anterior (demo)
-            //const screen = document.getElementById('imgSlideScreen');
-            //screen.src = sortedSlides[json.currentSlide-1].content;
-
             if(json.currentSlide != 0)
             {
                 console.log("cargando diapo actual: ", json.currentSlide)
-                const slideContainer = document.getElementById('slideCardContainer');
-                console.log(slideCardContainer);
+                const slideContainer = document.getElementById('slide-container');
+                
                 console.log(sortedSlides[json.currentSlide-1]);
-                slideContainer.innerHTML = showSlide(sortedSlides[json.currentSlide-1]);
+                slideContainer.innerHTML += pintarSlide(sortedSlides[json.currentSlide-1],2);
             }
             else
             {
@@ -112,12 +108,12 @@ export async function joinSessionHandler() {
                 console.log("MENSAJE RECIBIDO - PARTICIPANTE");
                 localStorage.setItem('currentSlide',slideIndex);
                 let sortedSlides = JSON.parse(localStorage.getItem("slides"));                
-                const slideContainer = document.getElementById('slideCardContainer');
+                const slideContainer = document.getElementById('slide-container');
 
                 console.log("slide antes de ser enviado a showslide")
                 console.log(sortedSlides[slideIndex-1]);
 
-                slideContainer.innerHTML = showSlide(sortedSlides[slideIndex-1],"participante");
+                slideContainer.innerHTML += pintarSlide(sortedSlides[slideIndex-1],2);
             });
 
             connection.on("UpdateStatistics", (slideStats) => {
@@ -143,7 +139,7 @@ export async function joinSessionHandler() {
 
 
             //agrego al grupo correspondiente
-            await connection.invoke("JoinSession", JSON.parse(sessionStorage.getItem("sessionId")));
+            await connection.invoke("JoinSession", JSON.parse(localStorage.getItem("sessionId")));
 
 
         }

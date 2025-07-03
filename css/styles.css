@@ -6,6 +6,14 @@
   --naranja: #F1634A;
   --naranja-claro: #E27662;
 }
+
+html,
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
 /* === NAVBAR === */
 
 /* Navbar base */
@@ -502,7 +510,8 @@ button {
 }
 
 .btn-success {
-  background-color: #2fa87c; /* Verde armónico con la paleta */
+  background-color: #2fa87c;
+  /* Verde armónico con la paleta */
   border-color: #2fa87c;
   color: white;
 }

@@ -3,7 +3,7 @@ import Navbar from '../../../components/navbar_auth.js';
 
 export default async () => {
     
-    const sessionId = sessionStorage.getItem('session_id');
+    const sessionId = localStorage.getItem('session_id');
     if (!sessionId) {
         window.location.href = '#/error';
         return 'Sesión no encontrada';
@@ -19,7 +19,7 @@ export default async () => {
 
 
     //Tomar los datos de la presentación
-    const presentation = JSON.parse(sessionStorage.getItem("presentation"));
+    const presentation = JSON.parse(localStorage.getItem("presentation"));
 
 
     // Función para formatear fechas (opcional)

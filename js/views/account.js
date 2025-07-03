@@ -1,12 +1,12 @@
 import Navbar from '../../components/navbar_auth.js';
 
 export default () => {
-    const access_token = sessionStorage.getItem('access_token');
-    const expires_in = sessionStorage.getItem('expires_in');
-    const refresh_token = sessionStorage.getItem('refresh_token');
-    const role = sessionStorage.getItem('role');
-    const token_type = sessionStorage.getItem('token_type');
-    const user_id = sessionStorage.getItem('user_id');
+    const access_token = localStorage.getItem('access_token');
+    const expires_in = localStorage.getItem('expires_in');
+    const refresh_token = localStorage.getItem('refresh_token');
+    const role = localStorage.getItem('role');
+    const token_type = localStorage.getItem('token_type');
+    const user_id = localStorage.getItem('user_id');
   
     return `${Navbar()}
       <div class="container mt-4">
