@@ -2,9 +2,11 @@ export default () => {
   return `
   <nav class="navbar navbar-expand-lg custom-navbar-2">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#/home">
-        <i class="bi bi-easel2-fill me-2"></i>SlideX
+      <a class="navbar-brand d-flex align-items-center" href="#/home">
+      <img src="http://127.0.0.1:5501/img/favicon.png" alt="SlideX logo" width="72" height="65" class="me-2">
+      SlideX
       </a>
+
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

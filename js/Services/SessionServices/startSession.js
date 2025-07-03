@@ -5,7 +5,7 @@ export async function startSession(sessionDescription,maxParticipants,presentati
     //el userId deberia obtenerlo del jwt, no deberia enviarlo en el body...
     //const user_id = 3   
 
-    const user_id = sessionStorage.getItem('user_id');
+    const user_id = localStorage.getItem('user_id');
 
     const payload = {
         description: sessionDescription,
@@ -13,7 +13,7 @@ export async function startSession(sessionDescription,maxParticipants,presentati
         presentation_id: presentationId,
         user_id : user_id
     }
-
+    
     const url = SESSION_SERVICE_URL + "session/create"
     //no se encuentra habilitado el Authorize en el backend
     //const jwt = 'Bearer ' + localStorage.getItem("access_token");

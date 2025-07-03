@@ -141,8 +141,8 @@ button {
 }
 
 .form-check-input:checked {
-  background-color: #ffffff;
-  border-color: #ffffff;
+  background-color: var(--naranja);
+  border-color: var(--azul-oscuro);
 }
 
 /* === VISTA PREVIA === */

@@ -1,7 +1,7 @@
 
 import { SIGNALR_HUB } from "../../../data/config.js";
 import { startSession } from "../SessionServices/startSession.js";
-import { showSlide } from "../../../components/slideCards.js";
+import { showSlide,pintarSlide } from "../../../components/slideCards.js";
 
 //creo variable para conectarme
 export const connection = new signalR.HubConnectionBuilder()
@@ -27,7 +27,8 @@ async function iniciarSignalR(){
         console.log("MENSAJE RECIBIDO - PRESENTADOR");
         let sortedSlides = JSON.parse(localStorage.getItem("slides"));                
         const slideContainer = document.getElementById('slideCardContainer');   
-        slideContainer.innerHTML = showSlide(sortedSlides[slideIndex-1],"presentador");
+        //slideContainer.innerHTML = showSlide(sortedSlides[slideIndex-1],"presentador");
+        slideContainer.innerHTML = pintarSlide(sortedSlides[slideIndex-1],1);
     });
 
     connection.on("UpdateStatistics", (slideStats) => {
@@ -69,8 +70,6 @@ async function iniciarSignalR(){
     console.log("Conectado como presentador");
 
     //agrego al grupo
-
-
     await connection.invoke("JoinSession", localStorage.getItem("sessionId"));
         
     console.log("Realizando invoke para carga de primer slide...")
@@ -123,10 +122,7 @@ async function startSessionHandler() {
     console.log("accessCode: ",json.acces_code);
 
     localStorage.setItem("sessionId",json.sessionId);
-    sessionStorage.setItem("accessCode",json.acces_code);
-
-    console.log("sessionId guardado en local (fijate donde conviene)?")
-    console.log("sessionId: ",localStorage.getItem("sessionId"));
+    localStorage.setItem("accessCode",json.acces_code);
 
     var sortedSlides = json.presentation.slides;
     //orden por posicion ascendente

@@ -30,6 +30,8 @@ export default () => {
         <button id="start-session-btn" class="btn btn-primary px-4">Iniciar Sesión</button>
       </div>
 
+
+      <!--
       <h2 class="mb-3">Crear una sesión para unirse luego</h2>
 
       <div class="row mb-5">
@@ -42,7 +44,9 @@ export default () => {
           </button>
         </div>
       </div>
+      -->
 
+      
       <h2 class="mb-3">Unirse a una sesión</h2>
 
       <div class="row align-items-center mb-5">
