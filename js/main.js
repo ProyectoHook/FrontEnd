@@ -11,12 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log("Iniciando main.js")
 
+    /*
     // ➤ Limpiar una vez y marcar que ya se limpió
     if (!localStorage.getItem('slidex_initialized')) {
         localStorage.clear();                         // 1) vacía todo
         localStorage.setItem('slidex_initialized', '1'); // 2) deja el flag
     }
-
+    */
+   
     router();
 
 
@@ -194,9 +196,23 @@ document.addEventListener('submit', async (event) => {
         const email = form.email.value;
         const password = form.password.value;
 
+        const loadingOverlay = document.querySelector('.loading-overlay');
+        const minDelay = 1000; // milisegundos mínimos que queremos mostrar el loader
         try {
+
+            loadingOverlay.classList.remove('d-none');
+            const startTime = performance.now();
             const response = await loginUser(email, password);
-            alert('Usuario correctamente logueado');
+
+
+            // Medimos el tiempo que tardó
+            const elapsed = performance.now() - startTime;
+
+            // Si fue muy rápido, esperamos el tiempo restante para que dure al menos minDelay
+            if (elapsed < minDelay) {
+                await new Promise(resolve => setTimeout(resolve, minDelay - elapsed));
+            }
+
 
             const access_token = response.access_token;
             const expires_in = response.expires_in;
@@ -218,6 +234,9 @@ document.addEventListener('submit', async (event) => {
             location.hash = '#/presentations';
         } catch (error) {
             alert('Error al loguearse ', error);
+        } finally {
+            // Ocultar loader siempre
+            loadingOverlay.classList.add('d-none');
         }
 
 
@@ -232,10 +251,13 @@ document.addEventListener('submit', async (event) => {
 document.addEventListener("submit", async (event) => {
     if (event.target.matches("#register-form")) {
         event.preventDefault();
+
         const error = document.getElementById("error");
         error.style.visibility = "hidden";
 
         const form = event.target;
+        const loadingOverlay = document.querySelector('.loading-overlay');
+        const minDelay = 1000; // 1 segundo mínimo
 
         if (!form.checkValidity()) {
             form.classList.add("was-validated");
@@ -243,6 +265,9 @@ document.addEventListener("submit", async (event) => {
         }
 
         try {
+            loadingOverlay.classList.remove('d-none');
+            const startTime = performance.now();
+
             const name = document.getElementById("nombre");
             const email = document.getElementById("email");
             const password = document.getElementById("password");
@@ -256,6 +281,13 @@ document.addEventListener("submit", async (event) => {
             };
 
             const data = await registerUser(requestData);
+
+            // Medimos el tiempo que tardó
+            const elapsed = performance.now() - startTime;
+            if (elapsed < minDelay) {
+                await new Promise(resolve => setTimeout(resolve, minDelay - elapsed));
+            }
+
             if (data) {
                 dialog.showModal();
 
@@ -263,14 +295,17 @@ document.addEventListener("submit", async (event) => {
                     dialog.close();
                     window.location.hash = "#/login";
                 });
-            } else if (!data) {
+            } else {
                 error.style.visibility = "visible";
             }
         } catch (err) {
             alert(err);
+        } finally {
+            loadingOverlay.classList.add('d-none');
         }
     }
 });
+
 
 
 //Restaurar contraseña

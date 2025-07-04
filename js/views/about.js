@@ -3,7 +3,7 @@ import Navbar from '../../components/navbar.js';
 export default async () => {
   return `
     ${Navbar()}
-    <main class="slidex-home-container slidex-gradient-bg">
+    <main class="page-center-wrapper slidex-home-container slidex-gradient-bg">
 
       <!-- Hero: Sobre nosotros -->
       <section class="slidex-section slidex-home-hero text-center">
@@ -17,7 +17,7 @@ export default async () => {
           <p class="slidex-subtitle">
             Nos llamamos <strong>CTRL C + CTRL V</strong> de copiar y pegar, y estamos dedicados a crear soluciones que faciliten la comunicación en presentaciones interactivas.
           </p>
-          <a href="#/" class="slidex-cta-btn slidex-float">Volver al Inicio</a>
+          <a href="#/login" class="slidex-cta-btn slidex-cta-strong slidex-cta-animate">Volver al Inicio</a>
         </div>
       </section>
 

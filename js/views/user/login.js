@@ -5,6 +5,10 @@ export default () => {
     ${Navbar()}
     <main class="page-center-wrapper home-container d-flex justify-content-center align-items-center">
       <div class="login-card slidex-scale-in">
+        
+        <!-- Loader oculto inicialmente -->
+        <div class="loading-overlay d-none"></div>
+        
         <h2 class="text-center mb-4">Iniciar Sesión</h2>
         
         <form id="login-form" novalidate>

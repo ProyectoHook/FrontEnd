@@ -3,51 +3,51 @@ import Navbar from '../../components/navbar_auth.js';
 export default async () => {
   return `
     ${Navbar()}
-    <main class="slidex-wrapper">
+    <main class="page-center-wrapper slidex-home-container slidex-gradient-bg">
 
-      <!-- HERO ------------------------------------------------------------->
-      <section class="slidex-section slidex-gradient-bg slidex-enter-left p-5">
-        <div class="slidex-content">
-          <h1 class="slidex-title">
-            Bienvenido a&nbsp;<span class="slidex-text-gradient">SlideX</span>
+      <!-- HERO -->
+      <section class="slidex-section home-hero text-center">
+        <div class="home-hero-content slidex-fade-in p-5">
+          <h1 class="slidex-border-underline">
+            <span class="slidex-text-gradient-dark slidex-text-shadow">BIENVENIDO A <span>SLIDEX</span></span>
           </h1>
+          <p class="slidex-subtitle">
+            ¡Comenzá ahora a crear y compartir tus presentaciones en tiempo real!
+          </p>
         </div>
       </section>
 
-      <!-- FEATURES --------------------------------------------------------->
-      <section class="slidex-section slidex-features mt-5">
-
-        <article class="slidex-card slidex-tilt text-center">
-          <i class="bi bi-easel-fill feature-icon"></i>
-          <h3 class="slidex-card-title">Crea Presentaciones</h3>
-          <p class="slidex-card-desc">
+      <!-- FEATURES -->
+      <section class="slidex-home-features slidex-fade-in">
+        <div class="slidex-feature-card slidex-tilt">
+          <i class="bi bi-easel-fill slidex-feature-icon"></i>
+          <h3 class="slidex-feature-title">Crea Presentaciones</h3>
+          <p class="slidex-feature-desc">
             Diseñá tus presentaciones directamente en la plataforma, sin software externo.
           </p>
-        </article>
+        </div>
 
-        <article class="slidex-card slidex-tilt text-center">
-          <i class="bi bi-broadcast-pin feature-icon"></i>
-          <h3 class="slidex-card-title">Transmití en Vivo</h3>
-          <p class="slidex-card-desc">
+        <div class="slidex-feature-card slidex-tilt">
+          <i class="bi bi-broadcast-pin slidex-feature-icon"></i>
+          <h3 class="slidex-feature-title">Transmití en Vivo</h3>
+          <p class="slidex-feature-desc">
             Mostrá tu presentación en tiempo real a tu audiencia, sin complicaciones.
           </p>
-        </article>
+        </div>
 
-        <article class="slidex-card slidex-tilt text-center">
-          <i class="bi bi-chat-dots-fill feature-icon"></i>
-          <h3 class="slidex-card-title">Interacción en Tiempo Real</h3>
-          <p class="slidex-card-desc">
+        <div class="slidex-feature-card slidex-tilt">
+          <i class="bi bi-chat-dots-fill slidex-feature-icon"></i>
+          <h3 class="slidex-feature-title">Interacción en Tiempo Real</h3>
+          <p class="slidex-feature-desc">
             Permití que tu audiencia participe con encuestas, preguntas y votaciones.
           </p>
-        </article>
-
+        </div>
       </section>
 
-      <!-- CTA FINAL -------------------------------------------------------->
+      <!-- CTA FINAL -->
       <section class="slidex-section text-center slidex-fade-in p-5">
         <h2 class="slidex-subtitle mb-4">Creá tu primera presentación</h2>
-        <a href="#/presentations/create"
-           class="slidex-btn-outline slidex-button-bounce">
+        <a href="#/presentations/create" class="slidex-cta-btn slidex-button-bounce">
           CREAR
         </a>
       </section>

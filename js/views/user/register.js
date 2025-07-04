@@ -5,10 +5,13 @@ export default () => {
     ${Navbar()}
     <div class="page-center-wrapper">
       <div class="container" style="max-width: 400px;">
-        <div class="login-card slidex-scale-in">
+        <div class="login-card slidex-scale-in" style="position: relative;">
+          
+          <!-- Loading overlay -->
+          <div class="loading-overlay d-none"></div>
+          
           <h2 class="my-4 text-center">Registrarme</h2>
           <div class="card-body">
-
             <form id="register-form" class="register-form" novalidate>
 
               <div class="mb-3">
@@ -68,7 +71,7 @@ export default () => {
                 </p>
               </div>
 
-              <button id="register-btn" type="submit" class="btn btn-primary w-100" id="login-btn">
+              <button id="register-btn" type="submit" class="btn btn-primary w-100">
                 Registrarme
               </button>
             </form>
