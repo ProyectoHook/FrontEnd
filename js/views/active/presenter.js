@@ -28,32 +28,23 @@ export default async () => {
         <!-- Lista de manos levantadas (opcional, quítala si no la usas) -->
         <div class="raise-hand-list-container">
           <h6 class="text-center text-primary mb-3">Manos levantadas</h6>
-          <ul id="listaDeManosLevantadas" class="list-group small">
-            <li class="list-group-item d-flex align-items-center">
-              <i class="bi bi-hand-index-thumb-fill text-primary me-2"></i> Juan Pérez
-            </li>
-            <li class="list-group-item d-flex align-items-center">
-              <i class="bi bi-hand-index-thumb-fill text-primary me-2"></i> Ana Gómez
-            </li>
-            <li class="list-group-item d-flex align-items-center">
-              <i class="bi bi-hand-index-thumb-fill text-primary me-2"></i> Martín López
-            </li>
-            <li class="list-group-item d-flex align-items-center">
-              <i class="bi bi-hand-index-thumb-fill text-primary me-2"></i> Carla Fernández
-            </li>
+          <ul id="raise-hand-list" class="list-group small p-3">
+            
           </ul>
         </div>
 
       </div>
 
+
+      
       <!-- Navegación -->
-      <div class="d-flex justify-content-center flex-wrap gap-2 mt-3">
+      <div class="d-flex justify-content-center flex-wrap gap-3 p-3 mt-3">
 
         <button id="btn_first" class="btn btn-secondary d-none" disabled>
           <i class="bi bi-skip-backward-fill"></i> First
         </button>
 
-        <button id="btn_prev" class="btn btn-primary" disabled>
+        <button id="btn_prev" class="btn-slide-nav">
           <i class="bi bi-arrow-left-circle-fill"></i> Anterior
         </button>
 
@@ -63,7 +54,7 @@ export default async () => {
 
         <input id="goToInput" class="form-control d-none" style="width:4rem" placeholder="#" disabled />
 
-        <button id="btn_next" class="btn btn-primary" disabled>
+        <button id="btn_next" class="btn-slide-nav">
           Siguiente <i class="bi bi-arrow-right-circle-fill"></i>
         </button>
 

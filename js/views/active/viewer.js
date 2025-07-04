@@ -1,6 +1,6 @@
 import Navbar from "../../../components/navbar_auth.js";
 
-export default async (sessionCode, slide) => {
+export default async (sessionCode) => {
   return `
     ${Navbar()}
 
@@ -21,8 +21,8 @@ export default async (sessionCode, slide) => {
           <!-- contenido dinámico aquí -->
         </div>
 
-        <div class="col-1 d-flex flex-column justify-content-start align-items-center p-0">
-          <button id="raise-hand-btn" type="button" class="btn btn-primary w-100 h-100 d-flex justify-content-center align-items-center" title="Levantar mano">
+        <div class="col-1 d-flex flex-column justify-content-start align-items-center p-3">
+          <button id="raise-hand-btn" type="button" class="not-raised" title="Levantar mano">
             <i class="bi bi-person-raised-hand fs-1"></i>
           </button>
         </div>

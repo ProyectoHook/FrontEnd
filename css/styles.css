@@ -325,7 +325,6 @@ button {
 
 .page-center-wrapper {
   min-height: calc(100vh - 80px);
-  /* ajusta si tenés navbar */
   display: flex;
   justify-content: center;
   align-items: center;

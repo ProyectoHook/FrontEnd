@@ -79,7 +79,7 @@ export async function joinSessionHandler() {
                 const slideContainer = document.getElementById('slide-container');
                 
                 console.log(sortedSlides[json.currentSlide-1]);
-                slideContainer.innerHTML += pintarSlide(sortedSlides[json.currentSlide-1],2);
+                slideContainer.innerHTML = pintarSlide(sortedSlides[json.currentSlide-1],2);
             }
             else
             {
@@ -113,7 +113,7 @@ export async function joinSessionHandler() {
                 console.log("slide antes de ser enviado a showslide")
                 console.log(sortedSlides[slideIndex-1]);
 
-                slideContainer.innerHTML += pintarSlide(sortedSlides[slideIndex-1],2);
+                slideContainer.innerHTML = pintarSlide(sortedSlides[slideIndex-1],2);
             });
 
             connection.on("UpdateStatistics", (slideStats) => {

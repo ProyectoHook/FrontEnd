@@ -7,12 +7,14 @@ export default () => {
     const role = localStorage.getItem('role');
     const token_type = localStorage.getItem('token_type');
     const user_id = localStorage.getItem('user_id');
+    const user_name = localStorage.getItem('user_name');
   
     return `${Navbar()}
       <div class="container mt-4">
         <h2>Sesión Iniciada</h2>
         <div class="card p-3">
           <p><strong>Access Token:</strong> ${access_token}</p>
+          <p><strong>User Name:</strong> ${user_name}</p>
           <p><strong>Expires In:</strong> ${expires_in}</p>
           <p><strong>Refresh Token:</strong> ${refresh_token}</p>
           <p><strong>Role:</strong> ${role}</p>

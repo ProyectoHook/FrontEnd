@@ -7,7 +7,7 @@
 }
 
 .slide-wrapper {
-    height: calc(100vh - 75px);
+    height: calc(100vh - 80px);
     overflow: hidden;
     /* para que no tenga scroll */
 }
@@ -123,3 +123,88 @@
     padding: 1rem;
     overflow-y: auto;
 }
+
+
+/* Estilo base */
+.btn-slide-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 1.5rem;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(0, 123, 255, 0.2);
+    background: linear-gradient(135deg, #007bff, #ff6600);
+    background-size: 200% 200%;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Glow animado */
+.btn-slide-nav.slidex-glow {
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+/* Hover fancy */
+.btn-slide-nav:hover {
+    background-position: right center;
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(255, 102, 0, 0.4);
+}
+
+/* Estado deshabilitado */
+.btn-slide-nav:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #ccc;
+    box-shadow: none;
+    color: #666;
+    text-shadow: none;
+}
+
+/* === ESTILO BASE GENERAL === */
+#raise-hand-btn {
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    align-self: start; /* Alineado arriba del todo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Ícono dentro del botón */
+  #raise-hand-btn i {
+    font-size: 2rem;
+    transition: transform 0.2s ease;
+  }
+  
+  /* Hover general */
+  #raise-hand-btn:hover {
+    transform: scale(1.05);
+  }
+  #raise-hand-btn:hover i {
+    transform: scale(1.2);
+  }
+  
+  /* === ESTADO: MANO ABAJO === */
+  #raise-hand-btn.not-raised {
+    background: linear-gradient(135deg, #007bff, #ff6600); /* Azul a naranja */
+    background-size: 200% 200%;
+    box-shadow: 0 3px 8px rgba(0, 123, 255, 0.3);
+  }
+  
+  /* === ESTADO: MANO LEVANTADA === */
+  #raise-hand-btn.raised {
+    background: linear-gradient(135deg, #ff6600, #007bff); /* Naranja a azul invertido */
+    background-size: 200% 200%;
+    box-shadow: 0 0 12px rgba(255, 102, 0, 0.5); /* Resplandor naranja */
+  }
+  

@@ -5,18 +5,31 @@ import { startSessionHandler, iniciarSignalR } from './Services/SignalR/signalR.
 import { joinSessionHandler } from './Services/SessionServices/joinSession.js';
 import qrModal from '../components/qrModal.js';
 import { connection } from './Services/SessionServices/joinSession.js'; //conexion de participante
+import { resetStorage } from './utils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
     console.log("Iniciando main.js")
 
-    
+    // ➤ Limpiar una vez y marcar que ya se limpió
+    if (!localStorage.getItem('slidex_initialized')) {
+        localStorage.clear();                         // 1) vacía todo
+        localStorage.setItem('slidex_initialized', '1'); // 2) deja el flag
+    }
 
     router();
 
 
+
+
     //delegacion de evento 'click' (carga el addEventListener para click para todo el DOM)
     document.addEventListener('click', async (event) => {
+
+        //LOGOUT
+        if (event.target.closest('.nav-item.auth a[href="#/landing"]')) {
+            resetStorage();
+        }
+
 
         //Descomentar para debug
         //console.log(event.target);
@@ -140,22 +153,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const btn = document.getElementById("raise-hand-btn");
             var raiseHand_btn;
 
-            if (btn.classList.contains("btn-primary")) {
-                alert("levantando la mano")
-                btn.classList.add("btn-warning");
-                btn.classList.remove("btn-primary");
+            if (btn.classList.contains("not-raised")) {
+
+                btn.classList.add("raised");
+                btn.classList.add("slidex-float-loop");
+                btn.classList.remove("not-raised");
                 raiseHand_btn = true;
             }
             else {
-                alert("Bajando la mano")
-                btn.classList.add("btn-primary");
-                btn.classList.remove("btn-warning");
+
+                btn.classList.add("not-raised");
+                btn.classList.remove("raised");
+                btn.classList.remove("slidex-float-loop");
                 raiseHand_btn = false;
             }
 
             var userId = localStorage.getItem("user_id");
             var sessionId = JSON.parse(localStorage.getItem("sessionId"));
-            var userName = "Te falta enviar el userName"
+            var userName = localStorage.getItem('user_name');;
 
             await connection.invoke("RaiseHand", sessionId, userId, userName, raiseHand_btn);
 
@@ -189,14 +204,15 @@ document.addEventListener('submit', async (event) => {
             const role = response.role;
             const token_type = response.token_type;
             const user_id = response.user_id;
+            const user_name = response.name;
 
+            localStorage.setItem('user_name', user_name);
             localStorage.setItem('access_token', access_token);
             localStorage.setItem('expires_in', expires_in);
             localStorage.setItem('refresh_token', refresh_token);
             localStorage.setItem('role', role);
             localStorage.setItem('token_type', token_type);
             localStorage.setItem('user_id', user_id);
-            //alert("falta traer el username y guardarlo");
 
             // Redirección a /SesionIniciada
             location.hash = '#/presentations';
