@@ -3,36 +3,55 @@ import Navbar from '../../components/navbar_auth.js';
 export default async () => {
   return `
     ${Navbar()}
-    <section class="container mt-5">
-      <div class="text-center">
-        <h1 class="display-4 fw-bold">Bienvenido a <span class="text-primary">SlideX</span></h1>
-        <p class="lead mt-3">Tu plataforma para presentaciones en vivo. Conecta, comparte y sorprende a tu audiencia en tiempo real.</p>
-        <a href="#/login" class="btn btn-primary btn-lg mt-4">Comenzar ahora</a>
-      </div>
+    <main class="slidex-wrapper">
 
-      <hr class="my-5" />
+      <!-- HERO ------------------------------------------------------------->
+      <section class="slidex-section slidex-gradient-bg slidex-enter-left p-5">
+        <div class="slidex-content">
+          <h1 class="slidex-title">
+            Bienvenido a&nbsp;<span class="slidex-text-gradient">SlideX</span>
+          </h1>
+        </div>
+      </section>
 
-      <div class="row text-center">
-        <div class="col-md-4">
-          <i class="bi bi-easel-fill fs-1 text-primary"></i>
-          <h3 class="mt-3">Crea Presentaciones</h3>
-          <p>Diseñá tus presentaciones directamente en la plataforma, sin necesidad de software externo.</p>
-        </div>
-        <div class="col-md-4">
-          <i class="bi bi-broadcast-pin fs-1 text-success"></i>
-          <h3 class="mt-3">Transmití en Vivo</h3>
-          <p>Mostrá tu presentación en tiempo real a tu audiencia, sin complicaciones.</p>
-        </div>
-        <div class="col-md-4">
-          <i class="bi bi-chat-dots-fill fs-1 text-info"></i>
-          <h3 class="mt-3">Interacción en Tiempo Real</h3>
-          <p>Permití que tu audiencia participe con encuestas, preguntas y votaciones durante tu presentación.</p>
-        </div>
-      </div>
+      <!-- FEATURES --------------------------------------------------------->
+      <section class="slidex-section slidex-features mt-5">
 
-      <div class="text-center mt-5">
-        <a href="#/register" class="btn btn-outline-secondary">¿Aún no tenés cuenta? Registrate</a>
-      </div>
-    </section>
+        <article class="slidex-card slidex-tilt text-center">
+          <i class="bi bi-easel-fill feature-icon"></i>
+          <h3 class="slidex-card-title">Crea Presentaciones</h3>
+          <p class="slidex-card-desc">
+            Diseñá tus presentaciones directamente en la plataforma, sin software externo.
+          </p>
+        </article>
+
+        <article class="slidex-card slidex-tilt text-center">
+          <i class="bi bi-broadcast-pin feature-icon"></i>
+          <h3 class="slidex-card-title">Transmití en Vivo</h3>
+          <p class="slidex-card-desc">
+            Mostrá tu presentación en tiempo real a tu audiencia, sin complicaciones.
+          </p>
+        </article>
+
+        <article class="slidex-card slidex-tilt text-center">
+          <i class="bi bi-chat-dots-fill feature-icon"></i>
+          <h3 class="slidex-card-title">Interacción en Tiempo Real</h3>
+          <p class="slidex-card-desc">
+            Permití que tu audiencia participe con encuestas, preguntas y votaciones.
+          </p>
+        </article>
+
+      </section>
+
+      <!-- CTA FINAL -------------------------------------------------------->
+      <section class="slidex-section text-center slidex-fade-in p-5">
+        <h2 class="slidex-subtitle mb-4">Creá tu primera presentación</h2>
+        <a href="#/presentations/create"
+           class="slidex-btn-outline slidex-button-bounce">
+          CREAR
+        </a>
+      </section>
+
+    </main>
   `;
 };

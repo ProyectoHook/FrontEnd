@@ -1,14 +1,16 @@
 import Navbar from "../../../components/navbar.js";
+
 export default () => {
   return `
     ${Navbar()}
-    <div class="container mt-5" style="max-width: 400px;">
-          
-        <div class="card p-3">
+    <div class="page-center-wrapper">
+      <div class="container" style="max-width: 400px;">
+        <div class="login-card slidex-scale-in">
           <h2 class="my-4 text-center">Registrarme</h2>
           <div class="card-body">
-            
-            <form id="register-form" class ="register-form" novalidate>
+
+            <form id="register-form" class="register-form" novalidate>
+
               <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input 
@@ -60,22 +62,28 @@ export default () => {
                 </div>
               </div>
 
-              <button id="register-btn" type="submit" class="btn btn-primary w-100">Registrarme</button>
               <div class="errorDiv">
-                  <p class="error" id="error">
-                  El email ingresado ya esta en uso
-              </p>
+                <p class="error" id="error">
+                  El email ingresado ya está en uso
+                </p>
+              </div>
+
+              <button id="register-btn" type="submit" class="btn btn-primary w-100" id="login-btn">
+                Registrarme
+              </button>
             </form>
           </div>
         </div>
-        <dialog class ="dialogCompleted" id ="registerCompleted">
-          <div class ="completedDiv">
+
+        <dialog class="dialogCompleted" id="registerCompleted">
+          <div class="completedDiv">
             <span class="dialogText">¡Registro completado!</span>
             <button class="completedBtn" id="acceptBtn">
-            <span>Aceptar</span>
+              <span>Aceptar</span>
             </button>
           </div>
         </dialog>
+      </div>
     </div>
-    `;
+  `;
 };

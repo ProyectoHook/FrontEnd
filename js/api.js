@@ -127,6 +127,36 @@ export async function getPresentation(presentationId, token) {
 }
 
 
+export async function getPresentationAll(token) {
+  try {
+
+    const url = `${PRESENTATION_SERVICE_URL}Presentation/GetAll`;
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log('Presentaciones encontradas: ',data);
+      return data;
+    }
+
+    const error = new Error(data.message || 'Error');
+    error.status = response.status;
+    throw error;
+
+  } catch (error) {
+    console.error('Error al obtener todas las presentaciones:', error);
+    throw error;
+  }
+}
+
 export async function createPresentationBackend(data, token) {
   try {
     const url = `${PRESENTATION_SERVICE_URL}presentation/create`;

@@ -1,7 +1,7 @@
 
 import { SIGNALR_HUB } from "../../../data/config.js";
 import { startSession } from "../SessionServices/startSession.js";
-import { showSlide,pintarSlide } from "../../../components/slideCards.js";
+import { pintarSlide } from "../../../components/slideCards.js";
 
 //creo variable para conectarme
 export const connection = new signalR.HubConnectionBuilder()

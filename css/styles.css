@@ -1,4 +1,4 @@
-/* === Variables globales === */
+/* === Variables globales (solo colores usados en otros elementos) === */
 :root {
   --gris-super-claro: #ECEBF1;
   --azul-oscuro: #137CA5;
@@ -7,106 +7,15 @@
   --naranja-claro: #E27662;
 }
 
-html,
-body {
-  height: 100vh;
+body,
+html {
   margin: 0;
   padding: 0;
-}
-
-/* === NAVBAR === */
-
-/* Navbar base */
-.custom-navbar,
-.custom-navbar-2 {
-  height: 75px;
-  padding: 0 2rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-/* Colores específicos */
-.custom-navbar {
-  background-color: var(--azul-oscuro);
-}
-
-.custom-navbar-2 {
-  background-color: var(--naranja);
-}
-
-/* Marca SlideX */
-.custom-navbar .navbar-brand,
-.custom-navbar-2 .navbar-brand {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: white;
-  transition: color 0.3s ease;
-}
-
-.custom-navbar .navbar-brand:hover {
-  color: var(--naranja);
-}
-
-.custom-navbar-2 .navbar-brand:hover {
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, var(--gris-super-claro) 0%, #c9e7f3 100%);
   color: var(--azul-oscuro);
-}
-
-/* Links navegación */
-.custom-navbar .nav-link,
-.custom-navbar-2 .nav-link {
-  color: white;
-  font-weight: 500;
-  padding: 0 1rem;
-  line-height: 75px;
-  transition: color 0.3s ease, transform 0.2s ease;
-}
-
-.custom-navbar-2 .nav-link {
-  font-size: 1.2rem;
-  border-radius: 5%;
-  margin-left: 2rem;
-}
-
-.custom-navbar .nav-link:hover {
-  color: var(--naranja);
-  transform: translateY(-2px);
-}
-
-.custom-navbar-2 .nav-link:hover {
-  color: var(--azul-oscuro);
-  transform: translateY(-2px);
-}
-
-/* Login/Register */
-.custom-navbar .nav-item.auth .nav-link,
-.custom-navbar-2 .nav-item.auth .nav-link {
-  border: 1px solid transparent;
-  border-radius: 6px;
-  padding: 0.3rem 0.8rem;
-}
-
-.custom-navbar .nav-item.auth .nav-link:hover {
-  background-color: var(--naranja-claro);
-  color: white;
-}
-
-.custom-navbar-2 .nav-item.auth .nav-link:hover {
-  background-color: var(--gris-super-claro);
-  color: var(--azul-oscuro);
-}
-
-/* Botón hamburguesa */
-.custom-navbar .navbar-toggler,
-.custom-navbar-2 .navbar-toggler {
-  border-color: white;
-  background-color: white;
-}
-
-.custom-navbar .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(19,124,165,1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-}
-
-.custom-navbar-2 .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(241,99,74,1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  overflow-x: hidden;
 }
 
 /* === LAYOUT GENERAL === */
@@ -114,7 +23,7 @@ body {
 .slide-container {
   max-width: 90%;
   margin: 0 auto;
-  height: calc(100vh - 75px);
+  height: calc(100vh - 80px);
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -281,7 +190,6 @@ button {
   flex-direction: column;
 }
 
-
 /* formato de slides */
 
 #slideCardContainer {
@@ -297,31 +205,7 @@ button {
   height: 60vh;
   /* 75% altura del contenedor total */
   flex-direction: colum;
-  /*display: block !important;
-  flex: 0 0 75%;
-  object-fit: cover; /* hace que la imagen se adapte y recorte si es necesario *
-  height: auto;*/
 }
-
-/*
-.custom-img-card {
-  height: 300px; /* o cualquier altura que quieras *
-  display: block !important;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.custom-img-card-img {
-  flex: 0 0 75%;
-  object-fit: cover; /* hace que la imagen se adapte y recorte si es necesario *
-  height: auto;
-}
-
-.custom-img-card-body {
-  flex: 0 0 25%;
-  padding: 0.5rem;
-  overflow-y: auto; /* por si el texto es muy largo *
-}*/
 
 .custom-img-card {
   height: 60vh;
@@ -337,7 +221,6 @@ button {
   display: block;
   object-fit: contain;
   background-color: #f0f0f0;
-  /* opcional: para ver límites */
 }
 
 .custom-img-card-img-onlyImg {
@@ -353,7 +236,6 @@ button {
 
 .custom-img-card-body {
   flex: 1;
-  /* 1/4 = 25% */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -383,101 +265,6 @@ button {
 
 .option-box input[type="text"] {
   flex-grow: 1;
-}
-
-
-/* Dialog registro completado */
-
-.dialogCompleted {
-  background-color: #137ca5;
-  border: none;
-  border-radius: 10px;
-  z-index: 1000;
-  height: 25vh;
-  width: 35vh;
-  padding: 0;
-}
-
-.dialogCompleted .completedDiv {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.dialogCompleted .completedDiv .dialogText {
-  font-size: 30px;
-  margin-top: 4rem;
-  color: white;
-  font-weight: bold;
-}
-
-.dialogCompleted .completedDiv .completedBtn {
-  background-color: #e27662;
-  border: none;
-  border-radius: 4px;
-  color: white;
-  font-size: 15px;
-  font-weight: bold;
-  width: 15vh;
-  padding: 0.5rem;
-  margin-top: 5vh;
-}
-
-.dialogCompleted .completedDiv .completedBtn:hover {
-  background-color: #cc6958;
-}
-
-.register-form .errorDiv {
-  display: flex;
-  justify-content: center;
-}
-
-.register-form .errorDiv .error {
-  display: flex;
-  visibility: hidden;
-  color: rgb(189, 15, 15);
-  font-size: 15;
-  margin-top: 0.5rem;
-}
-
-.signUpDiv .singUpButton {
-  display: inline-block;
-  padding: 8px 16px;
-  background-color: #6c757d;
-  color: white;
-  text-decoration: none;
-  border-radius: 4px;
-  margin-top: 10px;
-}
-
-.signUpDiv .singUpButton:hover {
-  background-color: #5a6268;
-  color: white;
-}
-
-.recover-form .mb-3 .legend {
-  text-align: justify;
-  margin-top: 2rem;
-  background-color: #e2e3e4;
-  padding: 0.5rem;
-  border-radius: 4px;
-}
-
-.recover-form .errorDiv {
-  display: flex;
-  justify-content: center;
-}
-
-.recover-form .errorDiv .error {
-  display: flex;
-  visibility: hidden;
-  color: rgb(189, 15, 15);
-  font-size: 15;
-  margin-top: 0.5rem;
 }
 
 
@@ -511,7 +298,6 @@ button {
 
 .btn-success {
   background-color: #2fa87c;
-  /* Verde armónico con la paleta */
   border-color: #2fa87c;
   color: white;
 }
@@ -534,4 +320,14 @@ button {
   background-color: var(--naranja-claro);
   border-color: var(--naranja-claro);
   color: white;
+}
+
+
+.page-center-wrapper {
+  min-height: calc(100vh - 80px);
+  /* ajusta si tenés navbar */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
 }

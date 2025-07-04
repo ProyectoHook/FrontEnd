@@ -1,6 +1,6 @@
 
 import { SESSION_SERVICE_URL, SIGNALR_HUB } from '../../../data/config.js'
-import { pintarSlide, showSlide } from '../../../components/slideCards.js'
+import { pintarSlide } from '../../../components/slideCards.js'
 
 
 export async function joinSession(sessionCode) {
