@@ -117,16 +117,12 @@ async function changeSlide(connection, sessionId, slideIndex, slide) {
 
 
 
-async function startSessionHandler() {
+async function startSessionHandler(presentationId) {
 
     console.log("Creando sesión (startSessionHandler)...");
 
-    const description = document.getElementById('descriptionInput').value;
-    const max_participants = document.getElementById('maxParticipantsInput').value;
-    const presentationId = document.getElementById('presentationIdInput').value;
-
     //Hace el POST para crear sesión y se trae la presentacion asociada y sus slides
-    const json = await startSession(description, max_participants, presentationId);
+    const json = await startSession("description", 1, presentationId);
 
     console.log("datos de la conexion");
     console.log(json);

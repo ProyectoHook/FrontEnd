@@ -1,5 +1,5 @@
 import router from './router.js';
-import { createParticipant, getSessionByAccessCode, loginUser, getPresentation, registerUser, recoverPassword } from './api.js'
+import { createParticipant, getSessionByAccessCode, loginUser, getPresentationById, registerUser, recoverPassword, deletePresentationBackend } from './api.js'
 import { startSignalRConnection, joinSessionGroup } from './SignalR/Manager.js';
 import { startSessionHandler, iniciarSignalR } from './Services/SignalR/signalR.js';
 import { joinSessionHandler } from './Services/SessionServices/joinSession.js';
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('slidex_initialized', '1'); // 2) deja el flag
     }
     */
-   
+
     router();
 
 
@@ -32,29 +32,40 @@ document.addEventListener('DOMContentLoaded', () => {
             resetStorage();
         }
 
+        // ELIMINAR PRESENTACIÓN
+        if (event.target.closest('button[data-action="delete"]')) {
+            const deleteBtn = event.target.closest('button[data-action="delete"]');
+            if (deleteBtn) {
+                const confirmed = confirm("¿Estás seguro de que querés eliminar esta presentación?");
+                if (!confirmed) return;
 
-        //Descomentar para debug
-        //console.log(event.target);
+                const id = deleteBtn.dataset.id;
+                const token = localStorage.getItem("access_token");
 
-        //click en elemento exacto  -->  if (event.target.matches("#join-session-btn")) { ...  }
-        //click en algun hijo dentro de ese elemento --> if (event.target.closest('idDelElemento')) { ... }
+                try {
+                    await deletePresentationBackend(id, token); // ← función que llama a tu API
+                    alert("✅ Presentación eliminada correctamente.");
 
-        //Presenter
-        /*if (event.target.matches("#create-session-btn")) {
+                    // Opcional: recargar o redirigir
+                    location.reload(); // o router.navigate("/#/home") si usás rutas hash
+                } catch (err) {
+                    console.error(err);
+                    alert("❌ Error al eliminar la presentación.");
+                }
+            }
+        }
 
-            //alert("este seria para crear la sesion el codigo y que se conecte en otro momento...");
+        //PRESENTAR
+        if (event.target.closest('button[data-action="present"]')) {
+            const presentBtn = event.target.closest('button[data-action="present"]');
+            if (presentBtn) {
+                const confirmed = confirm("¿Estás seguro de que querés presentar?");
+                if (!confirmed) return;
+            }
 
-            var sessioncode = "ABC123"
-
-            location.hash = `#/active/presenter/${sessioncode}`;
-
-        }*/
-
-        //Presenter (start_btn)
-        if (event.target.matches("#start-session-btn")) {
-
+            const id = presentBtn.dataset.id;
             //se crea la sesión
-            await startSessionHandler();
+            await startSessionHandler(id);
 
             console.log("renderizando vista de presentacion (presentador)");
 
@@ -137,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 colorLight: "#ffffff",    //podes cambiarlo
                 correctLevel: QRCode.CorrectLevel.H   //no se que hace, ver 
             });
-
+ 
             console.log("qrContainer: ", qrContainer);
             */
 

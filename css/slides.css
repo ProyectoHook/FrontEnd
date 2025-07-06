@@ -174,37 +174,187 @@
     width: 60px;
     height: 60px;
     padding: 0;
-    align-self: start; /* Alineado arriba del todo */
+    align-self: start;
+    /* Alineado arriba del todo */
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  /* Ícono dentro del botón */
-  #raise-hand-btn i {
+}
+
+/* Ícono dentro del botón */
+#raise-hand-btn i {
     font-size: 2rem;
     transition: transform 0.2s ease;
-  }
-  
-  /* Hover general */
-  #raise-hand-btn:hover {
+}
+
+/* Hover general */
+#raise-hand-btn:hover {
     transform: scale(1.05);
-  }
-  #raise-hand-btn:hover i {
+}
+
+#raise-hand-btn:hover i {
     transform: scale(1.2);
-  }
-  
-  /* === ESTADO: MANO ABAJO === */
-  #raise-hand-btn.not-raised {
-    background: linear-gradient(135deg, #007bff, #ff6600); /* Azul a naranja */
+}
+
+/* === ESTADO: MANO ABAJO === */
+#raise-hand-btn.not-raised {
+    background: linear-gradient(135deg, #007bff, #ff6600);
+    /* Azul a naranja */
     background-size: 200% 200%;
     box-shadow: 0 3px 8px rgba(0, 123, 255, 0.3);
-  }
-  
-  /* === ESTADO: MANO LEVANTADA === */
-  #raise-hand-btn.raised {
-    background: linear-gradient(135deg, #ff6600, #007bff); /* Naranja a azul invertido */
+}
+
+/* === ESTADO: MANO LEVANTADA === */
+#raise-hand-btn.raised {
+    background: linear-gradient(135deg, #ff6600, #007bff);
+    /* Naranja a azul invertido */
     background-size: 200% 200%;
-    box-shadow: 0 0 12px rgba(255, 102, 0, 0.5); /* Resplandor naranja */
-  }
-  
+    box-shadow: 0 0 12px rgba(255, 102, 0, 0.5);
+    /* Resplandor naranja */
+}
+
+/* =========================================================================
+   SlideX – Presentación Mejorada
+   =========================================================================*/
+
+/* ===== 1. Layout general =============================================== */
+.presenter-wrapper,
+.participant-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.slide-wrapper {
+    height: calc(100vh - 80px);
+    overflow: hidden;
+}
+
+/* ===== 2. Contenedor de thumbnails de slides =========================== */
+#slides-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: #e9ecef;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.slide-thumb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3rem;
+    background-color: #ffffff;
+    border: 2px solid #ced4da;
+    border-radius: 0.5rem;
+    min-width: 60px;
+    min-height: 80px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.slide-thumb:hover {
+    transform: scale(1.05);
+}
+
+.active-slide {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 2px #0d6efd44;
+    background-color: #e7f1ff;
+}
+
+/* Botones dentro del thumbnail */
+.move-btn,
+.delete-btn {
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    color: #000000;
+    cursor: pointer;
+    margin: 10px;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.move-btn {
+    background-color: #0d6dfd6e;
+}
+
+.move-btn:hover {
+    color: #613f00;
+    background-color: #0d6dfd9d;
+    transform: scale(1.1);
+}
+
+.delete-btn {
+    background-color: rgba(245, 38, 38, 0.658);
+}
+
+
+.delete-btn:hover {
+    color: #0d6efd;
+    background-color: #dc3545;
+    transform: scale(1.1);
+}
+
+.delete-btn {
+    color: #dc3545;
+    margin-top: 0.5rem;
+}
+
+/* ===== 3. Botones generales (Agregar, Guardar) ========================= */
+#slides-container>.btn {
+    height: 60px;
+    min-width: 60px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#slides-container>.btn-light {
+    background: #fff;
+    border: 2px dashed #6c757d;
+    color: #6c757d;
+}
+
+#slides-container>.btn-light:hover {
+    background: #f8f9fa;
+    border-color: #343a40;
+    color: #343a40;
+}
+
+#slides-container>.btn-success {
+    background: #198754;
+    border: none;
+    color: white;
+}
+
+#slides-container>.btn-success:hover {
+    background: #157347;
+}
+
+#slide-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 2rem;
+    min-height: 500px;
+    background-color: white;
+    border-radius: 1rem;
+}
+
+#slide-container h2,
+#slide-container h4 {
+    color: var(--sx-primary);
+    text-align: center;
+}
