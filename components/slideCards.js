@@ -1,3 +1,4 @@
+import { connection } from '../js/Services/SessionServices/joinSession.js';
 
 export function showSlideWaiting() {
 
@@ -63,8 +64,10 @@ function slideConPreguntaPresentador(slide) {
                     ${o.optionText ?? ""}
                   </label>
                 </div>`).join("")
-      : `<p class="text-muted">No hay opciones disponibles</p>`
-    }
+            : `<p class="text-muted">No hay opciones disponibles</p>`
+        }
+            <div id="stats-presenter" class="alert alert-info mt-3" style="display:none;"></div>
+
           </div>
         </div>
   
@@ -177,6 +180,57 @@ function slideSinPreguntaParticipante(slide) {
 }
 
 
-function submitAnswer() {
-  alert('Mandando respuesta');
+// Evento delegado para todos los botones "Guardar respuesta"
+document.addEventListener('click', function(event) {
+    if (event.target && event.target.matches('button[id^="btn-save-ask-"]')) {
+        const button = event.target;
+        const slideId = button.id.replace('btn-save-ask-', '');
+        const parent = button.closest('.participant-question');
+        let selectedOption = null;
+        if (parent) {
+            // Busca primero un radio seleccionado
+            const radio = parent.querySelector('input.form-check-input[type="radio"]:checked');
+            if (radio) {
+                // Buscar el label asociado y tomar el texto
+                const label = parent.querySelector('label[for="' + radio.id + '"]');
+                selectedOption = label ? label.textContent.trim() : null;
+            } else {
+                // Si no hay radios, busca un checkbox seleccionado (solo el primero)
+                const checkbox = parent.querySelector('input.form-check-input[type="checkbox"]:checked');
+                if (checkbox) {
+                    const label = parent.querySelector('label[for="' + checkbox.id + '"]');
+                    selectedOption = label ? label.textContent.trim() : null;
+                }
+            }
+        }
+        submitAnswer(slideId, selectedOption);
+    }
+});
+
+// Modificar submitAnswer para recibir los datos
+async function submitAnswer(slideId, selectedOption) {
+    if (!selectedOption) {
+        alert('Por favor, selecciona una respuesta antes de guardar.');
+        return;
+    }
+    const sessionId = localStorage.getItem('sessionId');
+    const userId = localStorage.getItem('user_id');
+    const answer = selectedOption;
+    console.log(userId);
+    console.log(sessionId);
+    const answerRequest = {
+        sessionId: sessionId.slice(1, -1),
+        slideId: Number(slideId),
+        userId: userId,
+        answer: answer
+    };
+
+    console.log('Enviando respuesta:', answerRequest);
+    if (connection.state !== "Connected") {
+    alert("La conexión con el servidor no está activa. Intenta recargar la página.");
+    return;
 }
+    var stats = await connection.invoke('submitAnswer',sessionId.slice(1, -1),answerRequest)
+    console.log('Estadistica recibida, stats:', stats);
+    
+

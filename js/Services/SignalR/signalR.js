@@ -1,4 +1,3 @@
-
 import { SIGNALR_HUB } from "../../../data/config.js";
 import { startSession } from "../SessionServices/startSession.js";
 import { pintarSlide } from "../../../components/slideCards.js";
@@ -39,20 +38,22 @@ async function iniciarSignalR() {
     });
 
     connection.on("UpdateStatistics", (slideStats) => {
+        // slideStats = { Total, Correct, Incorrect, CorrectPercentage }
+        alert("Recibiendo respuesta - ESTOY EN PRESENTADOR");
+        console.log("respuesta desde PRESENTADOR: ", slideStats);
 
-        // nota: 
-        //
-        // slideStas = {
-        //  int Total,
-        //  int Correct,
-        //  int Incorrect,
-        //  double CorrectPercentage
-        // }
-
-        alert("Recibiendo respuesta - ESTOY EN PRESENTADOR")
-
-        console.log("respuesta: ", slideStats);
-
+        // Mostrar estadísticas en la vista del presentador
+        let statsContainer = document.getElementById('stats-presenter');
+        if (statsContainer) {
+            statsContainer.style.display = 'block';
+            statsContainer.innerHTML = `
+                <strong>Estadísticas de la pregunta actual:</strong><br>
+                Total de respuestas: <b>${slideStats.total}</b><br>
+                Respuestas correctas: <b class='text-success'>${slideStats.correct}</b><br>
+                Respuestas incorrectas: <b class='text-danger'>${slideStats.incorrect}</b><br>
+                Porcentaje correctas: <b>${slideStats.correctPercentage}%</b>
+            `;
+        }
     });
 
     connection.on("ChangeRaiseHandTail", (userId, userName, status_btn) => {
@@ -92,24 +93,25 @@ async function iniciarSignalR() {
 }
 
 
-
 async function changeSlide(connection, sessionId, slideIndex, slide) {
 
     console.log("slideIndex: ", slideIndex);
     console.log("sessionId: ", sessionId);
 
+    // Determinar si el slide tiene pregunta
+    const hasQuestion = slide.ask && slide.answerCorrect && slide.options;
+
     const slideRequest = {
         sessionId: sessionId,
         slideIndex: slideIndex,
         slideId: slide.slideId,
-        ask: null,
-        answerCorrect: null,
-        options: null
+        ask: hasQuestion ? slide.ask : null,
+        answerCorrect: hasQuestion ? slide.answerCorrect : null,
+        options: hasQuestion ? slide.options : null
     }
 
     console.log("slideRequest: ", slideRequest);
 
-    //await connection.invoke("ChangeSlide", sessionId, slideIndex);
     await connection.invoke("ChangeSlide", sessionId, slideRequest);
 }
 
