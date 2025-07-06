@@ -58,6 +58,10 @@ export default async () => {
           Siguiente <i class="bi bi-arrow-right-circle-fill"></i>
         </button>
 
+        <button id="btn_end_session" class="btn-slide-nav">
+          <i class="bi bi-arrow-left-circle-fill"></i> CERRAR SESION
+        </button>
+
         <button id="btn_last" class="btn btn-secondary d-none" disabled>
           Last <i class="bi bi-skip-forward-fill"></i>
         </button>
