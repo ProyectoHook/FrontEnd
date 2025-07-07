@@ -13,6 +13,10 @@ export default async () => {
         <span id="sessionStatusSpan" class="text-danger fw-bold">Not Connected</span>
         <span>Session code:</span>
         <span id="sessionCodeSpan" class="text-danger fw-bold"></span>
+        <button id="share-links-modal-btn" type="button" class="not-raised btn-slide-nav btn-primary p-2" title="Compartir enlaces">
+          <i class="bi bi-link-45deg fs-3 m-0"></i>
+          <i class="bi bi-qr-code fs-3 m-0"></i>
+        </button>
       </div>
 
       <!-- Zona principal -->

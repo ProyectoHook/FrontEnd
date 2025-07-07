@@ -75,6 +75,26 @@ const router = async () => {
   }
   else {
 
+    //lo vuelo por si quiere loguearse de cero, por si existe de antes
+    sessionStorage.removeItem("joinSession");
+
+    const hash = window.location.hash; //lo que la url tiene a partir del #
+    // Ej: "#/login?session=236A29"
+
+    const hashParts = hash.split("?"); // Separa "/login" y "session=236A29"
+    
+    const queryString = hashParts[1];
+    
+    if (queryString) {
+
+      console.log("parametro detectado: ",queryString);
+      sessionStorage.setItem("joinSession",queryString.split("=")[1]);
+
+      //redirecciona a login cuando sale del if
+      path = `/login`;
+
+    }
+
     //toma una ruta preestablecida o Landing
 
     render = routes[path] || Landing;
