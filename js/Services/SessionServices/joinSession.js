@@ -116,6 +116,15 @@ export async function joinSessionHandler() {
                 slideContainer.innerHTML = pintarSlide(sortedSlides[slideIndex-1],2);
             });
 
+            
+            connection.on("SessionClosed", () => {
+                const confirmed = window.confirm("La sesión ha finalizado. ¿Deseás volver al inicio?");
+                
+                if (confirmed) {
+                    window.location.hash = '#/joinsession';
+                }
+            });
+
             connection.on("UpdateStatistics", (slideStats) => {
             
                     // nota: 

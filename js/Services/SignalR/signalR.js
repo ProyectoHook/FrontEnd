@@ -1,6 +1,7 @@
 import { SIGNALR_HUB } from "../../../data/config.js";
 import { startSession } from "../SessionServices/startSession.js";
 import { pintarSlide } from "../../../components/slideCards.js";
+import { endSession } from "../../api.js";
 
 //creo variable para conectarme
 export const connection = new signalR.HubConnectionBuilder()
@@ -27,6 +28,12 @@ async function iniciarSignalR() {
     console.log("funcion iniciarSignalR")
 
 
+    if (connection && connection.state !== "Disconnected") {
+        console.log("🔁 Deteniendo conexión activa antes de reiniciar...");
+        await connection.stop();
+    }
+
+
     //defino lo que sucede cuando reciba mensaje
     connection.on("ReceiveSlide", (slideIndex) => {
 
@@ -36,6 +43,21 @@ async function iniciarSignalR() {
         //slideContainer.innerHTML = showSlide(sortedSlides[slideIndex-1],"presentador");
         slideContainer.innerHTML = pintarSlide(sortedSlides[slideIndex - 1], 1);
     });
+
+    connection.onclose(async (error) => {
+        console.warn("🔌 SignalR se desconectó:", error);
+
+        const sessionId = localStorage.getItem("sessionId");
+        const token = localStorage.getItem('access_token');
+        try {
+            await endSession(sessionId, token);
+            console.log('Sesión cerrada correctamente');
+        } catch (err) {
+            console.error("❌ Falló el cierre de sesión:", err.message || err);
+        }
+    });
+
+
 
     connection.on("UpdateStatistics", (slideStats) => {
         // slideStats = { Total, Correct, Incorrect, CorrectPercentage }
@@ -74,7 +96,6 @@ async function iniciarSignalR() {
         }
 
     })
-
 
     //Conectamos
     await connection.start();

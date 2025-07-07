@@ -56,6 +56,37 @@ export async function getSessionByAccessCode(accessCode, token) {
 }
 
 
+export async function endSession(sessionId, token) {
+  try {
+
+    const url = `${SESSION_SERVICE_URL}session/logout/${sessionId}`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log(data);
+      return data;
+    }
+
+    const error = new Error(data.message || 'Error');
+    error.status = response.status;
+    throw error;
+
+  } catch (error) {
+    console.error('Error al cerrar sesión:', error);
+    throw error;
+  }
+}
+
+
 export async function createParticipant(user, session, token) {
 
 

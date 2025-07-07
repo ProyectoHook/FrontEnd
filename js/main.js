@@ -7,9 +7,48 @@ import qrModal from '../components/qrModal.js';
 import { connection } from './Services/SessionServices/joinSession.js'; //conexion de participante
 import { resetStorage } from './utils.js';
 
+/* --------------------------------------------------------------------
+ * 1. IMPORTA endSession (o ajusta al nombre real de tu API client)
+ * ------------------------------------------------------------------*/
+import { endSession } from './api.js';   // ← asegurate que exista
+
+/* --------------------------------------------------------------------
+ * 2. DELEGACIÓN GLOBAL DE CLICS  (sólo un addEventListener)
+ * ------------------------------------------------------------------*/
+document.addEventListener('click', async (event) => {
+
+    /* ----------------- LOGOUT de la navbar -------------------------- */
+    if (event.target.closest('.nav-item.auth a[href="#/landing"]')) {
+        resetStorage();
+    }
+
+    /* ----------------- CERRAR SESIÓN (botón rojo) ------------------- */
+    if (event.target.closest('#btn_end_session')) {
+        const sessionId = localStorage.getItem('sessionId');
+        const token = localStorage.getItem('access_token');
+
+        try {
+            // 1) Notificar al backend
+            const resp = await endSession(sessionId, token);
+            alert('La sesión ha sido cerrada.');
+            console.log('✅ Sesión cerrada en backend.');
+        } catch (err) {
+            console.error('❌ Error al cerrar sesión:', err);
+        }
+
+        // 3) Limpiar storage y redirigir
+        localStorage.removeItem('sessionId');
+        window.location.hash = '#/presentations';
+        return;                   // ← evitamos que siga evaluando otros if
+    }
+});
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
 
     console.log("Iniciando main.js")
+
 
     /*
     // ➤ Limpiar una vez y marcar que ya se limpió
@@ -22,8 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
     router();
 
 
-
-
     //delegacion de evento 'click' (carga el addEventListener para click para todo el DOM)
     document.addEventListener('click', async (event) => {
 
@@ -31,6 +68,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target.closest('.nav-item.auth a[href="#/landing"]')) {
             resetStorage();
         }
+
+        /*
+        const sessionId = localStorage.getItem("sessionId");
+        const token = localStorage.getItem('access_token');
+        try {
+            await endSession(sessionId, token);
+            console.log('Session cerrada correctamente');
+        } catch (err) {
+            console.error("❌ Falló el cierre de sesión:", await response.text());
+        }
+        */
 
         // ELIMINAR PRESENTACIÓN
         if (event.target.closest('button[data-action="delete"]')) {
@@ -132,6 +180,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
 
+
+
         //qrModal
         if (event.target.matches('#btn_shareLink')) {
 
@@ -192,6 +242,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
+
+
 
 document.addEventListener('submit', async (event) => {
     if (event.target.matches('#login-form')) {
@@ -370,3 +423,5 @@ document.addEventListener("submit", async (event) => {
         }
     }
 });
+
+
