@@ -25,31 +25,26 @@ export default async () => {
             <i class="bi bi-easel2-fill me-2"></i>${safeTitle}
           </strong>
           <span class="sx-badge">
-            <i class="bi bi-file-slides me-1"></i>Contiene ${slideQty} slide${
-        slideQty !== 1 ? "s" : ""
-      }
+            <i class="bi bi-file-slides me-1"></i>Contiene ${slideQty} slide${slideQty !== 1 ? "s" : ""
+        }
           </span>
         </div>
 
         <div class="sx-buttons">
-      <a href="#/metrics/${p.id}" id="metris-presentation-${p.id}" data-id="${
-        p.id
-      }" class="sx-btn sx-btn--secondary">
-            <i class="bi bi-pencil-square me-1"></i>Desempeños
+      <a href="#/metrics/${p.id}" id="metris-presentation-${p.id}" data-id="${p.id
+        }" class="sx-btn sx-btn--secondary">
+            <i class="bi bi-eye me-1"></i>Desempeños
           </a>
-          <button id="present-presentation-${p.id}" data-id="${
-        p.id
-      }" data-action="present" class="sx-btn sx-btn--primary">
+          <button id="present-presentation-${p.id}" data-id="${p.id
+        }" data-action="present" class="sx-btn sx-btn--primary">
             <i class="bi bi-play-fill me-1"></i>Presentar
           </button>
-          <a href="#/presentations/edit/${
-            p.id
-          }" class="sx-btn sx-btn--secondary">
+          <a href="#/presentations/edit/${p.id
+        }" class="sx-btn sx-btn--secondary">
             <i class="bi bi-pencil-square me-1"></i>Editar
           </a>
-          <button id="delete-presentation-${p.id}" data-id="${
-        p.id
-      }" data-action="delete" class="sx-btn sx-btn--danger">
+          <button id="delete-presentation-${p.id}" data-id="${p.id
+        }" data-action="delete" class="sx-btn sx-btn--danger">
             <i class="bi bi-trash3 me-1"></i>Eliminar
           </button>
         </div>
@@ -65,10 +60,9 @@ export default async () => {
       </h2>
 
       <div class="sx-list">
-        ${
-          listItems ||
-          '<p class="text-muted"><i class="bi bi-info-circle me-1"></i>No hay presentaciones disponibles.</p>'
-        }
+        ${listItems ||
+    '<p class="text-muted"><i class="bi bi-info-circle me-1"></i>No hay presentaciones disponibles.</p>'
+    }
       </div>
     </section>`;
 };

@@ -9,16 +9,29 @@ Chart.register(ChartDataLabels);
 
 export default async function renderMetricsListView(id) {
   return `${Navbar()}
-    <div style="display: flex; gap: 2rem; padding: 1rem;">
-      <div style="display: flex; flex-direction: column; width: 30vh; background-color: #fd7e14; padding: 1rem;">
-        <h2>Seleccioná una presentación</h2>
-        <div class="presentation-list" 
-             style="display: flex; flex-direction: column; gap: 1rem; overflow-y: auto; max-height: 60vh;">
-          <div>Cargando métricas para presentación #${id}...</div>
+    <div class="metrics-main-container">
+      <div class="metrics-content">
+        <h2 class="sx-heading text-center">Seleccioná una presentación</h2>
+        <div class="metrics-layout">
+          <div class="sessions-panel">
+            <div class="sessions-header">
+              <h3>Sesiones disponibles</h3>
+            </div>
+            <div class="presentation-list">
+              <div class="loading-message">
+                Cargando métricas para presentación #${id}...
+              </div>
+            </div>
+          </div>
+          <div class="metrics-panel">
+            <div id="metrics-container" class="metrics-container">
+              <div class="no-selection-message">
+                Seleccioná una sesión para ver las métricas
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div id="metrics-container" style="flex: 1;"></div>
     </div>
   `;
 }
@@ -32,7 +45,7 @@ export async function postRenderMetricsListView(id) {
     const sessions = presentations.sessions || [];
 
     if (sessions.length === 0) {
-      container.innerHTML = "<div>No hay presentaciones disponibles.</div>";
+      container.innerHTML = "<div class='no-sessions-message'>No hay presentaciones disponibles.</div>";
       return;
     }
 
@@ -40,30 +53,44 @@ export async function postRenderMetricsListView(id) {
       .map(
         (session) => `
       <div class="presentation-box" 
-           style="border: 1px solid #ccc; cursor: pointer; padding: 0.5rem;"
            data-guid="${session.guid}">
-        ${new Date(session.dateTime).toLocaleDateString()}
+        <div class="presentation-date">
+          ${new Date(session.dateTime).toLocaleDateString()}
+        </div>
+        <div class="presentation-time">
+          ${new Date(session.dateTime).toLocaleTimeString()}
+        </div>
       </div>`
       )
       .join("");
 
     container.querySelectorAll(".presentation-box").forEach((box) => {
       box.addEventListener("click", async () => {
+        // Remover clase activa de otros elementos
+        container.querySelectorAll(".presentation-box").forEach(b => 
+          b.classList.remove("active")
+        );
+        // Agregar clase activa al elemento clickeado
+        box.classList.add("active");
+        
         const guid = box.dataset.guid;
         const metricsContainer = document.getElementById("metrics-container");
+        
+        metricsContainer.innerHTML = "<div class='loading-metrics'>Cargando métricas...</div>";
+        
         try {
           const metrics = await getMetricsForSessionGuid(guid);
           metrics.guid = guid;
           renderMetricsInContainer(metrics, metricsContainer);
         } catch (err) {
           metricsContainer.innerHTML =
-            "<div>Error al cargar las métricas.</div>";
+            "<div class='error-message'>Error al cargar las métricas.</div>";
           console.error("Error al obtener métricas por guid:", err);
         }
       });
     });
   } catch (error) {
-    container.innerHTML = "<div>Error al cargar las presentaciones.</div>";
+    container.innerHTML = "<div class='error-message'>Error al cargar las presentaciones.</div>";
     console.error("Error en fetchPresentations:", error);
   }
 }
@@ -128,20 +155,39 @@ async function renderMetricsInContainer(data, container) {
   };
 
   container.innerHTML = `
-    <h3>Métricas de la presentación</h3>
-    <div><strong>Duración:</strong> ${sessionStats.duration}</div>
-    <div><strong>Usuarios conectados:</strong> ${sessionStats.totalUsers}</div>
-    <div class="charts-container" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;"></div>
-    <canvas id="generalPerformanceChart" width="300" height="300"></canvas>
+    <div class="metrics-header">
+      <h3>Métricas de la presentación</h3>
+    </div>
+    <div class="session-stats">
+      <div class="stat-item">
+        <span class="stat-label">Duración:</span>
+        <span class="stat-value">${sessionStats.duration}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Usuarios conectados:</span>
+        <span class="stat-value">${sessionStats.totalUsers}</span>
+      </div>
+    </div>
+    <div class="general-chart-container">
+      <canvas id="generalPerformanceChart" width="300" height="300"></canvas>
+    </div>
+    <div class="questions-charts-container">
+      <h4>Métricas por pregunta</h4>
+      <div class="charts-grid"></div>
+    </div>
   `;
 
-  const chartsContainer = container.querySelector(".charts-container");
+  const chartsContainer = container.querySelector(".charts-grid");
 
   questionsStats.forEach((q, index) => {
+    const chartWrapper = document.createElement("div");
+    chartWrapper.className = "chart-wrapper";
+    
     const canvas = document.createElement("canvas");
     canvas.width = 200;
     canvas.height = 200;
-    chartsContainer.appendChild(canvas);
+    chartWrapper.appendChild(canvas);
+    chartsContainer.appendChild(chartWrapper);
 
     new Chart(canvas, {
       type: "pie",
