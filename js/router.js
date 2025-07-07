@@ -20,6 +20,7 @@ const routes = {
   '/login': Login,
   '/register': Register,
   '/about': About,
+  '/help': About,
   '/presentations': Presentations,
   '/presentations/create': createPresentation,
   '/presentations/edit': EditPresentation,

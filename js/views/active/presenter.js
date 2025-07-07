@@ -8,7 +8,7 @@ export default async () => {
     <div class="slide-wrapper">
 
       <!-- Barra de estado -->
-      <div class="d-flex justify-content-center align-items-center gap-2 mb-2">
+      <div class="status-bar d-flex justify-content-center align-items-center gap-2 mb-2">
         <span>Status:</span>
         <span id="sessionStatusSpan" class="text-danger fw-bold">Not Connected</span>
         <span>Session code:</span>
@@ -30,8 +30,8 @@ export default async () => {
 
         <!-- Lista de manos levantadas -->
         <div class="raise-hand-list-container col-12 col-lg-2">
-          <h6 class="text-center text-primary mb-3">Manos levantadas</h6>
-          <ul id="raise-hand-list" class="list-group small p-3 m-0 overflow-auto" style="max-height: 400px;">
+          <h5 class="slide-title text-center mb-3">MANOS LEVANTADAS</h5>
+          <ul id="raise-hand-list" class="list-group small p-5 m-0 overflow-auto" style="max-height: 400px;">
             <!-- Lista dinámica -->
           </ul>
         </div>

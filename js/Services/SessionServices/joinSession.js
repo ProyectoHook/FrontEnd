@@ -136,7 +136,6 @@ export async function joinSessionHandler() {
                     //  double CorrectPercentage
                     // }
             
-                    alert("Recibiendo respuesta - ESTOY EN PARTICIPANTE")
 
                     console.log("respuesta desde PARTICIPANTE: ",slideStats);
 

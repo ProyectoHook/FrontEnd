@@ -61,7 +61,7 @@ async function iniciarSignalR() {
 
     connection.on("UpdateStatistics", (slideStats) => {
         // slideStats = { Total, Correct, Incorrect, CorrectPercentage }
-        alert("Recibiendo respuesta - ESTOY EN PRESENTADOR");
+        //alert("Recibiendo respuesta - ESTOY EN PRESENTADOR");
         console.log("respuesta desde PRESENTADOR: ", slideStats);
 
         // Mostrar estadísticas en la vista del presentador
