@@ -1,4 +1,4 @@
-import Navbar from '../../components/navbar_auth.js';
+import Navbar from '../../components/navbar.js';
 
 export default async () => {
   return `
@@ -46,7 +46,7 @@ export default async () => {
 
       <!-- CTA FINAL -->
       <section class="slidex-section text-center slidex-fade-in p-5">
-        <a href="#/presentations/create" class="slidex-cta-btn slidex-cta-strong slidex-cta-animate">Creá tu primera presentación</a>
+        <a href="#/login" class="slidex-cta-btn slidex-cta-strong slidex-cta-animate">¡Registrate gratis!</a>
       </section>
 
     </main>
